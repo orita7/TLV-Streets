@@ -4,11 +4,11 @@ var hashStreets = [];
 
 
 
-fs.readdir('streets/',function (err, filesNames) {
+fs.readdir('./public/static/streets/',function (err, filesNames) {
 
     filesNames.forEach(function(fileName){
 
-        fs.readFile('streets/'+fileName, 'utf8', function (err,data) {
+        fs.readFile('./public/static/streets/'+fileName, 'utf8', function (err,data) {
             console.log(fileName);
             if (err) {
                 console.log(err);
