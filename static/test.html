@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>My Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+</head>
+<body>
+
+<!-- Start of first page: #mainPage -->
+<div data-role="page" id="mainPage">
+
+    <div data-role="header" data-theme="b">
+        <h1></h1>
+    </div><!-- /header -->
+
+    <div data-role="content" >
+        <h2 align="center">
+        <img src="./static/logo.jpg"alt="TLV_Logo" height="100" width="250" align="middle">
+        </h2>
+        <p><a href="#searchByPage" data-role="button" data-icon="search"> חיפוש לפי</a></p>
+        <p><a href="#randomPage" data-role="button" data-icon="star"> הידעת</a></p>
+        <p><a href="#aboutAsPage" data-role="button" data-rel="dialog" data-transition="pop" data-icon="info">?מי אנחנו</a></p>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-theme="d">
+        <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
+    </div><!-- /footer -->
+
+
+</div><!-- /end of #mainPage -->
+
+<!-- Start of #searchByPage -->
+<div data-role="page" id="searchByPage">
+
+    <div data-role="header" data-theme="b">
+        <h1></h1>
+    </div><!-- /header -->
+
+    <div data-role="content" >
+        <h2 align="center"></h2>
+        <p><a href="#byNamePage" data-role="button" data-icon=""> שם רחוב</a></p>
+        <p><a href="#byLocationPage" data-role="button" data-icon="">המיקום שלי </a></p>
+
+        <p align="center"><a href="#mainPage" data-direction="reverse" data-role="button" data-icon="back" data-iconpos="notext"></a></p>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-theme="d">
+        <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
+    </div><!-- /footer -->
+
+</div><!-- /end of #searchByPage -->
+
+
+<!-- Start of #byNamePage -->
+<div data-role="page" id="byNamePage">
+
+    <div data-role="header" data-theme="b">
+        <h1></h1>
+    </div><!-- /header -->
+
+    <div data-role="content" >
+        <h2 align="center">חיפוש לפי שם הרחוב</h2>
+        <p align="center"> </p>
+
+        <input type="search" name="search-mini" id="searchInput" value="" data-mini="true" />
+        <h2 align="center">
+        <button id="Get" onclick="getValue()" data-inline="true">חפש</button>
+        </h2>
+
+        <script>
+            function getValue() {
+                var inputText = document.getElementById('searchInput');
+                if (inputText.value != "")
+                    alert("You entered: " + inputText.value);
+                else
+                    alert("please enter street name");
+                return inputText;
+            }
+        </script>
+
+
+
+        <!--
+        <ul data-role="listview" data-inset="true" data-filter="true" id="streetsList">
+            <li><a href="#">חוה</a></li>
+            <li><a href="#">סאני</a></li>
+            <li><a href="#">אורית</a></li>
+            <li><a href="#">מיכאל</a></li>
+            <li><a href="#">עידן</a></li>
+            <li><a href="#">שלמה</a></li>
+        </ul>
+        -->
+
+        <p align="center"><a href="#searchByPage" data-direction="reverse" data-role="button" data-icon="back" data-iconpos="notext"></a></p>
+
+    </div><!-- /content -->
+
+    <div data-role="footer" data-theme="d">
+        <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
+    </div><!-- /footer -->
+
+</div><!-- /end of #byNamePage -->
+
+<!-- Start of #byLocationPage -->
+<div data-role="page" id="byLocationPage">
+
+    <div data-role="header" data-theme="b">
+
+        <h1>by location</h1>
+
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+
+        <style>
+            html, body {
+                height : 100%;
+            }
+            #byLocationPage {
+                height : 100%;
+            }
+            #byLocationPage .ui-header {
+                height : 40px;
+            }
+            #byLocationPage .ui-content {
+                position : absolute;
+                top      : 40px;
+                right    : 0;
+                bottom   : 30px;
+                left     : 0;
+            }
+            #byLocationPage .ui-footer {
+                position : absolute;
+                bottom   : 0;
+                left     : 0;
+                width    : 100%;
+                height   : 30px;
+            }
+
+        </style>
+    </div><!-- /header -->
+
+
+    <div data-role="content">
+        <div id="map" style="width:100%;height:80%;"></div>
+        <p align="center">
+            <a href="#searchByPage" data-direction="reverse" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext"></a>
+        </p>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-theme="d">
+        <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
+    </div><!-- /footer -->
+
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?language=iw"></script>
+
+
+    <script>
+        $(document).on( 'pageshow', '#byLocationPage',function(event){
+            initMap();
+        });
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 8,
+                mapTypeControl: false,
+                streetViewControl: false,
+                zoomControl: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            // Try HTML5 geolocation
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    getStreetNameFromGoogleGeo(map, pos);
+
+
+                }, function() {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                    'Error: The Geolocation service failed.' :
+                    'Error: Your browser doesn\'t support geolocation.');
+        }
+
+
+        function getStreetNameFromGoogleGeo(map, pos) {
+            var geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(pos.lat, pos.lng);
+
+            geocoder.geocode({'latLng': latlng}, function(results, status) {
+
+                if (status == google.maps.GeocoderStatus.OK) {
+                    alert(results[0].address_components[0].long_name);
+                    map.setCenter(results[0].geometry.location);
+                    map.fitBounds(results[0].geometry.bounds);
+
+                } else {
+                    alert("Geocoder failed due to: " + status);
+                }
+            });
+        }
+
+
+    </script>
+
+</div><!-- /end of #byLocationPage -->
+
+<!-- Start of #randomPage -->
+<div data-role="page" id="randomPage">
+
+    <div data-role="header" data-theme="b">
+        <h1></h1>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <h2 align="center">random page</h2>
+        <p align="center">this is random page</p>
+
+        <p align="center"><a href="#mainPage" data-direction="reverse" data-role="button" data-icon="back" data-iconpos="notext"></a></p>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-theme="d"  >
+        <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
+    </div><!-- /footer -->
+
+</div><!-- /end of #randomPage -->
+
+<!-- Start of #aboutAsPage -->
+<div data-role="page" id="aboutAsPage">
+
+    <div data-role="header" data-theme="e">
+        <h1>?מי אנחנו</h1>
+    </div><!-- /header -->
+
+    <div data-role="content" data-theme="d">
+        <p align="center">סאני בן ארי</p>
+        <p align="center">אורית קורן</p>
+        <p align="center">חוה אליעזר</p>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-theme="d">
+        <p align="center" style="font-size:100%"> </p>
+    </div><!-- /footer -->
+
+</div><!-- /end of #aboutAsPage -->
+
+</body>
+</html>
