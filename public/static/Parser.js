@@ -2,8 +2,6 @@ var streetDelimiter = "\r\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 var fs = require('fs');
 var hashStreets = [];
 
-
-
 fs.readdir('./public/static/streets/',function (err, filesNames) {
 
     filesNames.forEach(function(fileName){
@@ -58,7 +56,12 @@ function addToHash(parseData){
     });
 }
 
-
+console.log(hashStreets.length);
+module.exports = {
+    get: function(){
+        return hashStreets.length;
+    },
+};
 
 
 
