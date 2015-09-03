@@ -14,7 +14,7 @@
 <div data-role="page" id="mainPage">
 
     <div data-role="header" data-theme="b">
-        <h1></h1>
+        <h1>TLV-Streets</h1>
     </div><!-- /header -->
 
     <div data-role="content" >
@@ -22,7 +22,7 @@
         <img src="static/logo.jpg"alt="TLV_Logo" height="100" width="250" align="middle">
         </h2>
         <p><a href="#searchByPage" data-role="button" data-icon="search"> חיפוש לפי</a></p>
-        <p><a href="#randomPage" data-role="button" data-icon="star"> הידעת</a></p>
+        <p><a href="#randomPage" data-role="button" data-icon="star"> ?הידעת</a></p>
         <p><a href="#aboutAsPage" data-role="button" data-rel="dialog" data-transition="pop" data-icon="info">?מי אנחנו</a></p>
     </div><!-- /content -->
 
@@ -110,7 +110,7 @@
 
     <div data-role="header" data-theme="b">
 
-        <h1>by location</h1>
+        <h1>חיפוש לפי מיקום</h1>
 
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
         <meta charset="utf-8">
@@ -145,7 +145,7 @@
 
 
     <div data-role="content">
-        <div id="map" style="width:100%;height:80%;"></div>
+        <div id="map" align="center" style="width:200px;height:200px;"></div>
         <p align="center">
             <a href="#searchByPage" data-direction="reverse" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext"></a>
         </p>
@@ -166,14 +166,13 @@
 
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: -34.397, lng: 150.644},
+                center: {lat: 32.08153566996312, lng: 34.77752322388187},
                 zoom: 8,
                 mapTypeControl: false,
                 streetViewControl: false,
                 zoomControl: false,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
-
             // Try HTML5 geolocation
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
@@ -201,7 +200,6 @@
                     'Error: Your browser doesn\'t support geolocation.');
         }
 
-
         function getStreetNameFromGoogleGeo(map, pos) {
             var geocoder = new google.maps.Geocoder();
             var latlng = new google.maps.LatLng(pos.lat, pos.lng);
@@ -209,7 +207,7 @@
             geocoder.geocode({'latLng': latlng}, function(results, status) {
 
                 if (status == google.maps.GeocoderStatus.OK) {
-                    alert(results[0].address_components[0].long_name);
+                    alert(results[0].address_components[1].long_name);
                     map.setCenter(results[0].geometry.location);
                     map.fitBounds(results[0].geometry.bounds);
 
