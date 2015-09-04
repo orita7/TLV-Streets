@@ -5,6 +5,7 @@
     <title>My Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+    <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
 </head>
@@ -82,19 +83,6 @@
             }
         </script>
 
-
-
-        <!--
-        <ul data-role="listview" data-inset="true" data-filter="true" id="streetsList">
-            <li><a href="#">חוה</a></li>
-            <li><a href="#">סאני</a></li>
-            <li><a href="#">אורית</a></li>
-            <li><a href="#">מיכאל</a></li>
-            <li><a href="#">עידן</a></li>
-            <li><a href="#">שלמה</a></li>
-        </ul>
-        -->
-
         <p align="center"><a href="#searchByPage" data-direction="reverse" data-role="button" data-icon="back" data-iconpos="notext"></a></p>
 
     </div><!-- /content -->
@@ -108,44 +96,31 @@
 <!-- Start of #byLocationPage -->
 <div data-role="page" id="byLocationPage">
 
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
     <div data-role="header" data-theme="b">
 
         <h1>חיפוש לפי מיקום</h1>
 
-        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-        <meta charset="utf-8">
-
-        <style>
-            html, body {
-                height : 100%;
-            }
-            #byLocationPage {
-                height : 100%;
-            }
-            #byLocationPage .ui-header {
-                height : 40px;
-            }
-            #byLocationPage .ui-content {
-                position : absolute;
-                top      : 40px;
-                right    : 0;
-                bottom   : 30px;
-                left     : 0;
-            }
-            #byLocationPage .ui-footer {
-                position : absolute;
-                bottom   : 0;
-                left     : 0;
-                width    : 100%;
-                height   : 30px;
-            }
-
-        </style>
     </div><!-- /header -->
 
-
     <div data-role="content">
-        <div id="map" align="center" style="width:200px;height:200px;"></div>
+        <div id="map" align="center"></div>
+        <style>
+            #map {
+                height: 200px;
+                border-style: solid;
+                border-width: 5px;
+                border-color: #4f6f9a;
+            }
+        </style>
+        <br>
+        <div  id="square" align="center">
+            <span class="innerTEXT" >
+                :הפירוש של הערך
+            </span>
+        </div>
         <p align="center">
             <a href="#searchByPage" data-direction="reverse" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext"></a>
         </p>
