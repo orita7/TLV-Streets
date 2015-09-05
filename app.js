@@ -38,12 +38,12 @@ app.get('/streets/:name', function(request, response) {
   response.send(fileParser.getStreets(request.params.name));
 });
 
-app.get('/search/:search',function(request,response){
+app.get('/predictions/:prediction',function(request,response){
 
   var url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?' +
       // the street name you want to search in google places,
       // streetname must be sent as UTF8 in order google servie acccept the request
-      'input=' + encodeURIComponent(request.params.search)+
+      'input=' + encodeURIComponent(request.params.prediction)+
       // types - only address result from israel
       '&types=address&language=il' +
       '&key='+googleAPI;
@@ -56,39 +56,41 @@ app.get('/search/:search',function(request,response){
     });
 
     res.on('end', function(){
-      var predictionResults = JSON.parse(body);
+      if(body !== ''){
+        var filteredPredictionResults = [];
+        var predictionResults = JSON.parse(body);
 
-      // TODO handel status: OK, zero_results, ....
-      var filteredPredictionResults = getStreetFromTlv(predictionResults);
+        if (predictionResults.status == "OK"){
+          filteredPredictionResults = getStreetFromTlv(predictionResults);
+        }
 
-      response.send(filteredPredictionResults);
-      console.log("Got a response: ", body);
+        response.send(filteredPredictionResults);
+
+      }
+
     });
   }).on('error', function(e){
-    console.log("Got an error: ", e);
+    // error do noting
   });
 
 
   function getStreetFromTlv(data){
-    var filtered;
+    var filtered = [];
 
     data.predictions.forEach(function (result){
+
+      // tel aviv yafo in hebrew
+      var strTlv = decodeURIComponent('%D7%AA%D7%9C%20%D7%90%D7%91%D7%99%D7%91%20%D7%99%D7%A4%D7%95');
+
       // if the city is tlv aviv
-
-      console.log('value:#' + result.terms[1].value + '#');
-      console.log('tosrtinrg:#' + result.terms[1].value+ '#');
-      console.log('compare:' + result.terms[1].value === 'תל אביב יפו');
-
-      //TODO: the hewbrew hard coded string making the comperasion to fail
-      if (result.terms[1].value == new String("תל אביב יפו").valueOf()) {
+      if (result.terms[1].value == strTlv) {
         // push the street name
-        filtered.push(result.terms[0]);
+        filtered.push(result.terms[0].value);
       }
     });
 
     return filtered;
   }
-
 
 });
 
