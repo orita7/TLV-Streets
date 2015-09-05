@@ -1,11 +1,11 @@
-body {
-  padding: 50px;
-  font: 15px "Alef-Regular", "Lucida Grande", Helvetica, Arial, sans-serif;
+@import url(http://fonts.googleapis.com/earlyaccess/alefhebrew.css);
+
+body *{
+  font-family: "Alef-Hebrew";
 }
 
 h1 {
   color: snow;
-  font-family: "Alef-Bold";
 }
 
 a {
