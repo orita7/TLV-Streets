@@ -1,4 +1,4 @@
-var fileParser = require('./Parser.js');
+var fileParser = require('./parser.js');
 var http = require('https');
 var express = require('express');
 var path = require('path');
@@ -35,7 +35,7 @@ app.use('/', routes);
 app.use('/users', users);
 
 app.get('/streets/:name', function(request, response) {
-  response.send(fileParser.getStreets(request.params.name));
+  response.send(fileParser.getStreetValue(request.params.name));
 });
 
 app.get('/predictions/:prediction',function(request,response){
