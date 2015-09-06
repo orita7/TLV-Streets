@@ -18,7 +18,7 @@
         <h1>TLV-Streets</h1>
     </div><!-- /header -->
 
-    <div data-role="content" >
+    <div data-role="content">
         <h2 align="center">
         <img src="static/logo.jpg"alt="TLV_Logo" height="100" width="250" align="middle">
         </h2>
@@ -27,7 +27,7 @@
         <p><a href="#aboutAsPage" data-role="button" data-rel="dialog" data-transition="pop" data-icon="info">?מי אנחנו</a></p>
     </div><!-- /content -->
 
-    <div data-role="footer" data-theme="d">
+    <div data-role="footer" data-theme="d" class="ui.footer">
         <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
     </div><!-- /footer -->
 
@@ -49,7 +49,7 @@
         <p align="center"><a href="#mainPage" data-direction="reverse" data-role="button" data-icon="back" data-iconpos="notext"></a></p>
     </div><!-- /content -->
 
-    <div data-role="footer" data-theme="d">
+    <div data-role="footer" data-theme="d" class="ui.footer">
         <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
     </div><!-- /footer -->
 
@@ -60,38 +60,104 @@
 <div data-role="page" id="byNamePage">
 
     <div data-role="header" data-theme="b">
-        <h1></h1>
+        <h1>חיפוש לפי שם הרחוב</h1>
     </div><!-- /header -->
 
-    <div data-role="content" >
-        <h2 align="center">חיפוש לפי שם הרחוב</h2>
-        <p align="center"> </p>
-
+    <div data-role="content" cal>
+        <h3 align="center"> :הכנס שם רחוב</h3>
         <input type="search" name="search-mini" id="searchInput" value="" data-mini="true" />
         <h2 align="center">
-        <button id="Get" onclick="getValue()" data-inline="true">חפש</button>
+        <a href="#byNameResponsePage"><button id="Get"  onclick="getValue()" data-inline="true">חפש</button></a>
+        </h2>
         </h2>
 
+       <!-- <script src="../parser.js"></script>
         <script>
             function getValue() {
                 var inputText = document.getElementById('searchInput');
                 if (inputText.value != "")
-                    alert("You entered: " + inputText.value);
+                    alert(Parser.getStreetValue(inputText));
                 else
                     alert("please enter street name");
                 return inputText;
             }
-        </script>
+        </script> -->
 
         <p align="center"><a href="#searchByPage" data-direction="reverse" data-role="button" data-icon="back" data-iconpos="notext"></a></p>
 
     </div><!-- /content -->
 
-    <div data-role="footer" data-theme="d">
+    <div data-role="footer" data-theme="d" class="ui.footer">
         <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
     </div><!-- /footer -->
 
 </div><!-- /end of #byNamePage -->
+
+<!-- Start of #byNameResponsePage -->
+<div data-role="page" id="byNameResponsePage">
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <div data-role="header" data-theme="b">
+        <h1>:חיפוש לפי שם הרחוב</h1>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <div id="map1" align="center"></div>
+        <style>
+            #map {
+                height: 200px;
+                border-style: solid;
+                border-width: 5px;
+                border-color: #4f6f9a;
+            }
+        </style>
+        <br>
+        <div  id="square" align="center">
+            <span id="#streetValue" class="innerTEXT" >
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        getStreetValue();
+                    })
+                    function getStreetValue() {
+                        $("#streetValue").html();
+                    }
+                </script>
+            </span>
+        </div>
+        <p align="center">
+            <a href="#searchByPage" data-direction="reverse" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext"></a>
+        </p>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-theme="d" class="ui.footer">
+        <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
+    </div><!-- /footer -->
+
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?language=iw"></script>
+
+
+    <script>
+        $(document).on( 'pageshow', '#byLocationPage',function(event){
+            initMap();
+        });
+
+        function initMap(lat, lng) {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 32.08153566996312, lng: 34.77752322388187},
+                zoom: 8,
+                mapTypeControl: false,
+                streetViewControl: false,
+                zoomControl: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+        }
+
+    </script>
+
+</div><!-- /end of #byNameResponsePage -->
 
 <!-- Start of #byLocationPage -->
 <div data-role="page" id="byLocationPage">
@@ -117,8 +183,15 @@
         </style>
         <br>
         <div  id="square" align="center">
-            <span class="innerTEXT" >
-                :הפירוש של הערך
+            <span id="#streetValue" class="innerTEXT" >
+                <script type="text/javascript">
+                $(document).ready(function(){
+                    getStreetValue();
+                })
+                    function getStreetValue() {
+                        $("#streetValue").html();
+                    }
+                </script>
             </span>
         </div>
         <p align="center">
@@ -126,7 +199,7 @@
         </p>
     </div><!-- /content -->
 
-    <div data-role="footer" data-theme="d">
+    <div data-role="footer" data-theme="d" class="ui.footer">
         <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
     </div><!-- /footer -->
 
@@ -211,30 +284,23 @@
         <p align="center"><a href="#mainPage" data-direction="reverse" data-role="button" data-icon="back" data-iconpos="notext"></a></p>
     </div><!-- /content -->
 
-    <div data-role="footer" data-theme="d"  >
+    <div data-role="footer" data-theme="d" class="ui.footer">
         <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
     </div><!-- /footer -->
 
 </div><!-- /end of #randomPage -->
 
-<!-- Start of #aboutAsPage -->
-<div data-role="page" id="aboutAsPage">
+<!-- Start of #aboutUsPage -->
+<div data-role="page" id="aboutUsPage">
 
     <div data-role="header" data-theme="e">
         <h1>?מי אנחנו</h1>
     </div><!-- /header -->
 
-    <div data-role="content" data-theme="d">
-        <p align="center">סאני בן ארי</p>
-        <p align="center">אורית קורן</p>
-        <p align="center">חוה אליעזר</p>
-    </div><!-- /content -->
-
-    <div data-role="footer" data-theme="d">
-        <p align="center" style="font-size:100%"> </p>
-    </div><!-- /footer -->
-
-</div><!-- /end of #aboutAsPage -->
+    <p data-role="content" data-theme="d">
+        <img src="static/street_sign_with_names.png" height="100%" width="100%">
+    </p><!-- /content -->
+    </div><!-- /end of #aboutUsPage -->
 
 </body>
 </html>
