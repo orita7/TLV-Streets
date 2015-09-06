@@ -12,28 +12,7 @@ a {
   color: #00B7FF;
 }
 
-#mainPage .ui-footer {
-  width: 100%;
-  height: 30px; /* Same height specified above */
-  position: absolute;
-  bottom: 0;
-}
-
-#searchByPage .ui-footer {
-  width: 100%;
-  height: 30px; /* Same height specified above */
-  position: absolute;
-  bottom: 0;
-}
-
-#randomPage .ui-footer {
-  width: 100%;
-  height: 30px; /* Same height specified above */
-  position: absolute;
-  bottom: 0;
-}
-
-#byNamePage .ui-footer {
+.ui-footer {
   width: 100%;
   height: 30px; /* Same height specified above */
   position: absolute;
@@ -43,19 +22,13 @@ a {
 #byLocationPage .ui-header {
   height : 40px;
 }
+
 #byLocationPage .ui-content {
   position : absolute;
   top      : 40px;
   right    : 0;
   left     : 0;
   bottom   : 30px;
-}
-#byLocationPage .ui-footer {
-  position : absolute;
-  bottom   : 0;
-  left     : 0;
-  width    : 100%;
-  height   : 30px;
 }
 
 #square {
