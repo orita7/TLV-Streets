@@ -32,7 +32,6 @@
         <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
     </div><!-- /footer -->
 
-
 </div><!-- /end of #mainPage -->
 
 <!-- Start of #searchByPage -->
@@ -58,15 +57,12 @@
 
 </div><!-- /end of #searchByPage -->
 
-
 <!-- Start of #byNamePage -->
 <div data-role="page" id="byNamePage">
 
     <div data-role="header" data-theme="b">
         <h1>חיפוש לפי שם הרחוב</h1>
     </div><!-- /header -->
-
-
 
     <div data-role="content" cal>
 
@@ -75,17 +71,14 @@
         <ul id="autocomplete" data-role="listview" data-inset="true" data-filter="true"  data-divider-theme="e" data-filter-placeholder="מצא רחוב" data-filter-theme="d"></ul>
 
         <h2 align="center">
-        <a href="#byNameResponsePage"><button id="Get"  onclick="getValue()" data-inline="true">חפש</button></a>
+        <a href="#byNameResponsePage"><button id="Get" onclick="getValue()" data-inline="true">חפש</button></a>
         </h2>
-        </h2>
-
 
         <script type="text/javascript">
 
             $(document).on("pageinit", "#byNamePage", function() {
                 $("#autocomplete").on("listviewbeforefilter", getPredictions);
             });
-
 
             function getPredictions(e, data) {
                 console.log('enter');
@@ -130,7 +123,6 @@
                 }
             };
 
-
         </script>
 
         <div class="backButtonPosition">
@@ -168,7 +160,7 @@
         <br>
 
         <div id="square" align="center">
-            <span id="#streetValue" class="innerTEXT" >
+            <span id="streetValue" class="innerTEXT" >
 
             </span>
         </div>
@@ -183,8 +175,6 @@
     <div data-role="footer" data-theme="d" class="ui.footer">
         <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
     </div><!-- /footer -->
-
-
 
     <script>
         $(document).on( 'pageshow', '#byLocationPage',function(event){
@@ -230,15 +220,7 @@
         </style>
         <br>
         <div  id="square" align="center">
-            <span id="#streetValue" class="innerTEXT" >
-                <script type="text/javascript">
-                $(document).ready(function(){
-                    getStreetValue();
-                })
-                    function getStreetValue() {
-                        $("#streetValue").html();
-                    }
-                </script>
+            <span id="streetValue" class="innerTEXT" >
             </span>
         </div>
 
@@ -252,7 +234,6 @@
     <div data-role="footer" data-theme="d" class="ui.footer">
         <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
     </div><!-- /footer -->
-
 
     <script>
         $(document).on( 'pageshow', '#byLocationPage',function(event){
@@ -300,20 +281,25 @@
             var latlng = new google.maps.LatLng(pos.lat, pos.lng);
 
             geocoder.geocode({'latLng': latlng}, function(results, status) {
-
+                var streetName;
                 if (status == google.maps.GeocoderStatus.OK) {
-                    alert(results[0].address_components[1].long_name);
+                    streetName = results[0].address_components[1].long_name;
                     map.setCenter(results[0].geometry.location);
                     map.fitBounds(results[0].geometry.bounds);
-
+                    $.ajax({
+                        url: "/streets/" + "מנדלסון, משה",
+                                dataType: "text"
+                            })
+                            .then(function (response) {
+                                     $(streetValue).html(response);
+                                    });
                 } else {
                     alert("Geocoder failed due to: " + status);
                 }
             });
         }
-
-
     </script>
+
 
 </div><!-- /end of #byLocationPage -->
 
