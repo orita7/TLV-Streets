@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var googleAPI = 'AIzaSyAFIeUM9E0jdkLT7aNsizf_Iove6TvCj6Y';
 // tel aviv yafo in hebrew
 var strTlv = decodeURIComponent('%D7%AA%D7%9C%20%D7%90%D7%91%D7%99%D7%91%20%D7%99%D7%A4%D7%95');
+var predictionsCache = [];
 
 
 var routes = require('./routes/index');
@@ -87,38 +88,45 @@ app.get('/getGeoFromName/:name', function(request, response) {
 
 app.get('/predictions/:prediction',function(request,response){
 
-  var url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?' +
-      // the street name you want to search in google places,
-      // streetname must be sent as UTF8 in order google servie acccept the request
-      'input=' + encodeURIComponent(request.params.prediction)+
-      // types - only address result from israel
-      '&types=address&language=il' +
-      '&key='+googleAPI;
+  if(predictionsCache[request.params.prediction] !== undefined){
+    // send cache
+    response.send(JSON.stringify(predictionsCache[request.params.prediction]));
+  }
+  else {
 
-  http.get(url, function(res){
-    var body = '';
+    var url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?' +
+          // the street name you want to search in google places,
+          // streetname must be sent as UTF8 in order google servie acccept the request
+        'input=' + encodeURIComponent(request.params.prediction) +
+          // types - only address result from israel
+        '&types=address&language=il' +
+        '&key=' + googleAPI;
 
-    res.on('data', function(chunk){
-      body += chunk;
-    });
+    http.get(url, function (res) {
+      var body = '';
 
-    res.on('end', function(){
-      if(body !== ''){
-        var filteredPredictionResults = [];
-        var predictionResults = JSON.parse(body);
+      res.on('data', function (chunk) {
+        body += chunk;
+      });
 
-        if (predictionResults.status == "OK"){
-          filteredPredictionResults = getStreetFromTlv(predictionResults);
+      res.on('end', function () {
+        if (body !== '') {
+          var filteredPredictionResults = [];
+          var predictionResults = JSON.parse(body);
+
+          if (predictionResults.status == "OK") {
+            filteredPredictionResults = getStreetFromTlv(predictionResults);
+          }
+
+          response.send(JSON.stringify(filteredPredictionResults));
+
         }
 
-        response.send(JSON.stringify(filteredPredictionResults));
-
-      }
-
+      });
+    }).on('error', function (e) {
+      // error do noting
     });
-  }).on('error', function(e){
-    // error do noting
-  });
+  }
 
 
   function getStreetFromTlv(data){
@@ -132,6 +140,9 @@ app.get('/predictions/:prediction',function(request,response){
         filtered.push(result.terms[0].value);
       }
     });
+
+    // save result to cache
+    predictionsCache[request.params.prediction] = filtered;
 
     return filtered;
   }
