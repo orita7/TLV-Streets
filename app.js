@@ -53,7 +53,6 @@ app.get('/streets/:name', function(request, response) {
   response.send(fileParser.getStreetValue(request.params.name));
 });
 
-
 app.get('/getGeoFromName/:name', function(request, response) {
 
   var url = 'https://maps.googleapis.com/maps/api/geocode/json?' +
@@ -84,17 +83,12 @@ app.get('/getGeoFromName/:name', function(request, response) {
           }
         }
 
-        response.send(geoResponse);
+        response.send(JSON.stringify(geoResponse));
       }
     });
   }).on('error', function(e){
     // error do noting
   });
-
-
-  function getStreetNameFromGeo(){
-
-  };
 
 });
 
@@ -140,12 +134,11 @@ app.get('/predictions/:prediction',function(request,response){
     });
   }
 
-
   function getStreetFromTlv(data){
     var filtered = [];
-
+      console.log(data.length);
     data.predictions.forEach(function (result){
-
+console.log(result);
       // if the city is tlv aviv
       if (result.terms[1].value == strTlv) {
         // push the street name
