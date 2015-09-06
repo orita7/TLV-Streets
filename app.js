@@ -8,6 +8,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var googleAPI = 'AIzaSyAFIeUM9E0jdkLT7aNsizf_Iove6TvCj6Y';
+// tel aviv yafo in hebrew
+var strTlv = decodeURIComponent('%D7%AA%D7%9C%20%D7%90%D7%91%D7%99%D7%91%20%D7%99%D7%A4%D7%95');
 
 
 var routes = require('./routes/index');
@@ -36,6 +38,51 @@ app.use('/users', users);
 
 app.get('/streets/:name', function(request, response) {
   response.send(fileParser.getStreetValue(request.params.name));
+});
+
+
+app.get('/getGeoFromName/:name', function(request, response) {
+
+  var url = 'https://maps.googleapis.com/maps/api/geocode/json?' +
+        // the street name you want to search in google places,
+        // streetname must be sent as UTF8 in order google servie acccept the request
+      'address=' + encodeURIComponent(strTlv + " " + request.params.name) +
+        // types - only address result from israel
+      '&language=il' +
+      '&key='+googleAPI;
+
+  http.get(url, function(res){
+    var body = '';
+
+    res.on('data', function(chunk){
+      body += chunk;
+    });
+
+    res.on('end', function(){
+
+      var geoResponse = '';
+
+      if(body !== ''){
+        var googleAnswer = JSON.parse(body);
+
+        if (googleAnswer.status == "OK"){
+          if(googleAnswer.results[0].types == "route"){
+            geoResponse = {lat: googleAnswer.results[0].geometry.location.lat, lng: googleAnswer.results[0].geometry.location.lng};
+          }
+        }
+
+        response.send(geoResponse);
+      }
+    });
+  }).on('error', function(e){
+    // error do noting
+  });
+
+
+  function getStreetNameFromGeo(){
+
+  };
+
 });
 
 app.get('/predictions/:prediction',function(request,response){
@@ -78,9 +125,6 @@ app.get('/predictions/:prediction',function(request,response){
     var filtered = [];
 
     data.predictions.forEach(function (result){
-
-      // tel aviv yafo in hebrew
-      var strTlv = decodeURIComponent('%D7%AA%D7%9C%20%D7%90%D7%91%D7%99%D7%91%20%D7%99%D7%A4%D7%95');
 
       // if the city is tlv aviv
       if (result.terms[1].value == strTlv) {
