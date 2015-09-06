@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
     <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?language=iw"></script>
     <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
 </head>
 <body>
@@ -63,25 +64,63 @@
         <h1>חיפוש לפי שם הרחוב</h1>
     </div><!-- /header -->
 
+
+
     <div data-role="content" cal>
         <h3 align="center"> :הכנס שם רחוב</h3>
-        <input type="search" name="search-mini" id="searchInput" value="" data-mini="true" />
+
+        <ul id="autocomplete" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="מצא רחוב" data-filter-theme="d"></ul>
+
         <h2 align="center">
         <a href="#byNameResponsePage"><button id="Get"  onclick="getValue()" data-inline="true">חפש</button></a>
         </h2>
         </h2>
 
-       <!-- <script src="../parser.js"></script>
-        <script>
-            function getValue() {
-                var inputText = document.getElementById('searchInput');
-                if (inputText.value != "")
-                    alert(Parser.getStreetValue(inputText));
-                else
-                    alert("please enter street name");
-                return inputText;
+
+        <script type="text/javascript">
+
+            $(document).on("pageinit", "#byNamePage",getPredictions);
+
+            function getPredictions(){
+                $("#autocomplete").die( "listviewbeforefilter",getPredictions);
+
+                setTimeout(function(){
+                    $("#autocomplete").live( "listviewbeforefilter",getPredictions);
+                },1500);
+
+                var $ul = $(this),
+                        $input = $(data.input),
+                        value = $input.val(),
+                        html = "";
+
+                $ul.html("");
+
+                if ( value && value.length > 2 ) {
+                    $ul.html( "<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>" );
+                    $ul.listview( "refresh" );
+
+                    $.ajax({
+                        url: "/predictions/" + $input.val(),
+                        dataType: "text"
+                    })
+                            .then( function ( response ) {
+                                var streets = JSON.parse(response);
+                                $.each(streets, function ( i, val ) {
+                                    html += "<li>" + val + "</li>";
+                                });
+                                $ul.html( html );
+                                $ul.listview( "refresh" );
+                                $ul.trigger( "updatelayout");
+                            });
+                }
             }
-        </script> -->
+
+
+
+
+
+
+        </script>
 
         <p align="center"><a href="#searchByPage" data-direction="reverse" data-role="button" data-icon="back" data-iconpos="notext"></a></p>
 
@@ -103,6 +142,7 @@
         <h1>:חיפוש לפי שם הרחוב</h1>
     </div><!-- /header -->
 
+
     <div data-role="content">
         <div id="map1" align="center"></div>
         <style>
@@ -114,16 +154,10 @@
             }
         </style>
         <br>
-        <div  id="square" align="center">
+
+        <div id="square" align="center">
             <span id="#streetValue" class="innerTEXT" >
-                <script type="text/javascript">
-                    $(document).ready(function(){
-                        getStreetValue();
-                    })
-                    function getStreetValue() {
-                        $("#streetValue").html();
-                    }
-                </script>
+
             </span>
         </div>
         <p align="center">
@@ -135,8 +169,6 @@
         <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
     </div><!-- /footer -->
 
-
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?language=iw"></script>
 
 
     <script>
@@ -202,9 +234,6 @@
     <div data-role="footer" data-theme="d" class="ui.footer">
         <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
     </div><!-- /footer -->
-
-
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?language=iw"></script>
 
 
     <script>

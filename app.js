@@ -111,7 +111,7 @@ app.get('/predictions/:prediction',function(request,response){
           filteredPredictionResults = getStreetFromTlv(predictionResults);
         }
 
-        response.send(filteredPredictionResults);
+        response.send(JSON.stringify(filteredPredictionResults));
 
       }
 
