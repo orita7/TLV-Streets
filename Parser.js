@@ -71,7 +71,7 @@ module.exports = {
         return startToParse()
     },
 
-    getStreets: function(streetName){
+    getStreetValue: function(streetName){
         return hashStreets[streetName];
     }
 };

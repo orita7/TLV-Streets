@@ -10,7 +10,7 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?language=iw"></script>
     <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
 </head>
-<body>
+<body dir="rtl">
 
 <!-- Start of first page: #mainPage -->
 <div data-role="page" id="mainPage">
@@ -24,8 +24,8 @@
         <img src="static/logo.jpg"alt="TLV_Logo" height="100" width="250" align="middle">
         </h2>
         <p><a href="#searchByPage" data-role="button" data-icon="search"> חיפוש לפי</a></p>
-        <p><a href="#randomPage" data-role="button" data-icon="star"> ?הידעת</a></p>
-        <p><a href="#aboutUsPage" data-role="button" data-rel="dialog" data-transition="pop" data-icon="info">?מי אנחנו</a></p>
+        <p><a href="#randomPage" data-role="button" data-icon="star"> הידעת?</a></p>
+        <p><a href="#aboutUsPage" data-role="button" data-rel="dialog" data-transition="pop" data-icon="info">מי אנחנו?</a></p>
     </div><!-- /content -->
 
     <div data-role="footer" data-theme="d" class="ui.footer">
@@ -69,9 +69,10 @@
 
 
     <div data-role="content" cal>
-        <h3 align="center"> :הכנס שם רחוב</h3>
 
-        <ul id="autocomplete" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="מצא רחוב" data-filter-theme="d"></ul>
+        <h3 align="center">הכנס שם רחוב:</h3>
+
+        <ul id="autocomplete" data-role="listview" data-inset="true" data-filter="true"  data-divider-theme="e" data-filter-placeholder="מצא רחוב" data-filter-theme="d"></ul>
 
         <h2 align="center">
         <a href="#byNameResponsePage"><button id="Get"  onclick="getValue()" data-inline="true">חפש</button></a>
@@ -112,9 +113,16 @@
                             .then(function (response) {
                                 console.log('get');
                                 var streets = JSON.parse(response);
+                                var html = "";
+
                                 $.each(streets, function (i, val) {
-                                    html += "<li>" + val + "</li>";
+                                    html += "<li>" +
+                                                "<a href=\"#byNameResponsePage\">" +
+                                                    val +
+                                                "</a>" +
+                                            " </li>";
                                 });
+
                                 $ul.html(html);
                                 $ul.listview("refresh");
                                 $ul.trigger("updatelayout");
@@ -263,13 +271,13 @@
             // Try HTML5 geolocation
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
+
                     var pos = {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
                     };
 
                     getStreetNameFromGoogleGeo(map, pos);
-
 
                 }, function() {
                     handleLocationError(true, infoWindow, map.getCenter());
@@ -335,7 +343,9 @@
 <div data-role="page" id="aboutUsPage">
 
     <div data-role="header" data-theme="e">
-        <h1>?מי אנחנו</h1>
+        <h1>
+            מי אנחנו?
+        </h1>
     </div><!-- /header -->
 
     <p data-role="content" data-theme="d">
