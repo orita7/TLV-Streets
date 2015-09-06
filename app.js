@@ -37,6 +37,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
+app.get('/getRandomPage', function(request, response) {
+  var allStreets = fileParser.getAllStreets();
+  var keys = Object.keys(allStreets);
+  var randomIndex = Math.floor(keys.length * Math.random());
+
+  var randomName = keys[randomIndex];
+  var randomValue = allStreets[keys[randomIndex]];
+
+  response.send(JSON.stringify({streetName: randomName , streetInfo: randomValue}));
+
+});
+
 app.get('/streets/:name', function(request, response) {
   response.send(fileParser.getStreetValue(request.params.name));
 });

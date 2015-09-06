@@ -73,5 +73,9 @@ module.exports = {
 
     getStreetValue: function(streetName){
         return hashStreets[streetName];
+    },
+
+    getAllStreets: function(){
+        return hashStreets;
     }
 };
