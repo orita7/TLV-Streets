@@ -116,18 +116,19 @@
 
                     $(document).ready(function() {
                         // update the streetInfo template to be by location
-                        $('#buttonByLoction').click(setTemplateByName);
+                        $('#buttonByLoction').click(function(){
+                            templateDisaply = templateOptions.LOCATION;
+                        });
                         // update the streetInfo template to be by location
-                        $('#buttonSearch').click(setTemplateByName);
+                        $('#buttonSearch').click(function(){
+                            templateDisaply = templateOptions.NAME;
+                        });
                     });
 
                     $(document).on("pageshow", "#byNamePage", function() {
                         $("#autocomplete").on("listviewbeforefilter", getPredictions);
                     });
 
-                    function setTemplateByName(){
-                        templateDisaply = templateOptions.NAME;
-                    };
 
                     function getPredictions(e, data) {
                         $("#autocomplete").off("listviewbeforefilter", getPredictions);
@@ -234,13 +235,14 @@
             <script>
 
                 var googleMap;
+                
                 var templateOptions = {
                     LOCATION: 1,
                     NAME: 2,
                     RANDOM: 3
                 };
 
-                var templateDisaply = templateDisaply = templateOptions.RANDOM;
+                var templateDisaply = templateOptions.RANDOM;
 
                 $(document).on("pageshow", "#streetInfoPage", function() {
                     setMap();
