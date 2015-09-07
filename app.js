@@ -8,6 +8,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var googleAPI = 'AIzaSyAFIeUM9E0jdkLT7aNsizf_Iove6TvCj6Y';
+
 // tel aviv yafo in hebrew
 var strTlv = decodeURIComponent('%D7%AA%D7%9C%20%D7%90%D7%91%D7%99%D7%91%20%D7%99%D7%A4%D7%95');
 var allStreets = fileParser.getAllStreets();
@@ -17,11 +18,13 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var app = express();
 fileParser.startToParse();
+
 //My function - orit
 app.use(express.static('public/static'));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
@@ -29,8 +32,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use('/', routes);
 app.use('/users', users);
+
 app.get('/getRandomPage', function(request, response) {
     var keys = Object.keys(allStreets);
     var randomIndex = Math.floor(keys.length * Math.random());
@@ -38,6 +43,7 @@ app.get('/getRandomPage', function(request, response) {
     var randomValue = allStreets[randomName];
     response.send(JSON.stringify({streetName: randomName , streetInfo: randomValue}));
 });
+
 app.get('/streets/:name', function(request, response) {
     var streetNameFromGoogle = request.params.name;
     var streetsNames = Object.keys(allStreets);
@@ -45,7 +51,7 @@ app.get('/streets/:name', function(request, response) {
     var index;
     var similarWords = [];
     if (streetNameFromGoogle.length < 2) {
-        response.send("׳”׳¨׳—׳•׳‘ ׳©׳”׳§׳©׳× ׳�׳� ׳ ׳�׳¦׳�");
+        response.send("");
     }
     else if (allShortStreetNames.hasOwnProperty(streetNameFromGoogle)) {
         response.send(fileParser.getStreetValue(allShortStreetNames[streetNameFromGoogle]));
@@ -84,6 +90,7 @@ app.get('/streets/:name', function(request, response) {
         }
     }
 });
+
 app.get('/getGeoFromName/:name', function(request, response) {
     var url = 'https://maps.googleapis.com/maps/api/geocode/json?' +
             // the street name you want to search in google places,
@@ -113,6 +120,7 @@ app.get('/getGeoFromName/:name', function(request, response) {
         // error do noting
     });
 });
+
 app.get('/predictions/:prediction',function(request,response){
     if(predictionsCache[request.params.prediction] !== undefined){
         // send cache
@@ -161,12 +169,14 @@ app.get('/predictions/:prediction',function(request,response){
         return filtered;
     }
 });
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
+
 // error handlers
 // development error handler
 // will print stacktrace
@@ -179,6 +189,7 @@ if (app.get('env') === 'development') {
         });
     });
 }
+
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
@@ -188,4 +199,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
+
 module.exports = app;
