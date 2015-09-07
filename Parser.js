@@ -1,6 +1,6 @@
 var hashStreets = [];
+var streetNamesArray = [];
 var streetDelimiter = "\r\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\n";
-
 
 function startToParse(){
 
@@ -46,22 +46,25 @@ function prepareRawDataToJson(filedata){
 function addToHash(parseData){
 
     var currentStreet;
-    var streetName;
+    var fullStreetName;
     var streetInfo;
 
     var allStreets = parseData.split(streetDelimiter);
 
     allStreets.forEach(function(street){
 
-
         currentStreet = new Object();
 
-        streetName = street.slice(0,street.indexOf('\r\n')).trim();
+        fullStreetName = street.slice(0,street.indexOf('\r\n')).trim();
 
         streetInfo = street.slice(street.indexOf('\r\n'),street.length);
         streetInfo = streetInfo.replace(/(\r\n|\n|\r)/g," ").trim();
 
-        hashStreets[streetName] = streetInfo;
+        partialStreetName = fullStreetName.split(",");
+        partialStreetName = partialStreetName[0].trim();
+        streetNamesArray[partialStreetName] = fullStreetName;
+
+        hashStreets[fullStreetName] = streetInfo;
     });
 }
 
@@ -77,5 +80,9 @@ module.exports = {
 
     getAllStreets: function(){
         return hashStreets;
+    },
+
+    getStreetNamesArray: function(){
+        return streetNamesArray;
     }
 };
