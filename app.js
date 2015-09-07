@@ -43,7 +43,7 @@ app.get('/getRandomPage', function(request, response) {
   var randomIndex = Math.floor(keys.length * Math.random());
 
   var randomName = keys[randomIndex];
-  var randomValue = allStreets[keys[randomIndex]];
+  var randomValue = allStreets[randomName];
 
   response.send(JSON.stringify({streetName: randomName , streetInfo: randomValue}));
 
