@@ -159,8 +159,8 @@
         </style>
         <br>
 
-        <div id="square" align="center">
-            <span id="streetValue" class="innerTEXT" >
+        <div id= valueBackground class="square" align="center">
+            <span id="thestreetValue" class="innerTEXT" >
 
             </span>
         </div>
@@ -219,9 +219,9 @@
             }
         </style>
         <br>
-        <div  id="square" align="center">
-            <span id="streetValue" class="innerTEXT" >
-            </span>
+
+            <p id="streetValue" class="innerTEXT" >
+            </p>
         </div>
 
         <div class="backButtonPosition">
@@ -291,7 +291,7 @@
                                 dataType: "text"
                             })
                             .then(function (response) {
-                                     $(streetValue).html(response);
+                                     $("#streetValue").html("מנדלסון, משה" +"<br>"+"<br>"+ response );
                                     });
                 } else {
                     alert("Geocoder failed due to: " + status);
@@ -300,19 +300,34 @@
         }
     </script>
 
-
 </div><!-- /end of #byLocationPage -->
 
 <!-- Start of #randomPage -->
 <div data-role="page" id="randomPage">
 
     <div data-role="header" data-theme="b">
-        <h1></h1>
+        <h1>הידעת?</h1>
     </div><!-- /header -->
 
     <div data-role="content">
-        <h2 align="center">random page</h2>
-        <p align="center">this is random page</p>
+        <p id="randomStreetName" align="right">
+        </p>
+        <p id="randomStreetValue" align="right">
+        </p>
+        <script>
+                $(document).on('pageshow', '#randomPage',function(event){
+                    var randomStreet;
+                    $.ajax({
+                        url: "/getRandomPage",
+                        dataType: "text"
+                    })
+                            .then(function (response) {
+                                randomStreet = JSON.parse(response);
+                                $("#randomStreetName").html(randomStreet.streetName);
+                                $("#randomStreetValue").html(randomStreet.streetInfo);
+                            });
+                });
+            </script>
 
         <div class="backButtonPosition">
         <p align="center"><a href="#mainPage" data-direction="reverse" data-role="button" data-icon="back" data-iconpos="notext"></a></p>
