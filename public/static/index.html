@@ -144,6 +144,7 @@
 
                         $ul.html("");
 
+<<<<<<< Updated upstream
                         if (value && value.length > 2) {
                             $ul.html("<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>");
                             $ul.listview("refresh");
@@ -336,6 +337,214 @@
                 };
 
                 function setByRandom() {
+=======
+                                $ul.html(html);
+                                $ul.listview("refresh");
+                                $ul.trigger("updatelayout");
+                            });
+                }
+            };
+
+        </script>
+
+        <div class="backButtonPosition">
+        <p align="center"><a href="#searchByPage" data-direction="reverse" data-role="button" data-icon="back" data-iconpos="notext"></a></p>
+        </div>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-theme="d" class="ui.footer">
+        <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
+    </div><!-- /footer -->
+
+</div><!-- /end of #byNamePage -->
+
+<!-- Start of #byNameResponsePage -->
+<div data-role="page" id="byNameResponsePage">
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <div data-role="header" data-theme="b">
+        <h1>:חיפוש לפי שם הרחוב</h1>
+    </div><!-- /header -->
+
+
+    <div data-role="content">
+        <div id="map1" align="center"></div>
+        <style>
+            #map {
+                height: 200px;
+                border-style: solid;
+                border-width: 5px;
+                border-color: #4f6f9a;
+            }
+        </style>
+        <br>
+
+        <div id= valueBackground class="square" align="center">
+            <span id="thestreetValue" class="innerTEXT" >
+
+            </span>
+        </div>
+
+        <div class="backButtonPosition">
+        <p align="center">
+            <a href="#searchByPage" data-direction="reverse" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext"></a>
+        </p>
+        </div>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-theme="d" class="ui.footer">
+        <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
+    </div><!-- /footer -->
+
+    <script>
+        $(document).on( 'pageshow', '#byLocationPage',function(event){
+            initMap();
+        });
+
+        function initMap(lat, lng) {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 32.08153566996312, lng: 34.77752322388187},
+                zoom: 8,
+                mapTypeControl: false,
+                streetViewControl: false,
+                zoomControl: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+        }
+
+    </script>
+
+</div><!-- /end of #byNameResponsePage -->
+
+<!-- Start of #byLocationPage -->
+<div data-role="page" id="byLocationPage">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    <div data-role="header" data-theme="b">
+
+        <h1>חיפוש לפי מיקום</h1>
+
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <div id="map" align="center"></div>
+        <style>
+            #map {
+                height: 200px;
+                border-style: solid;
+                border-width: 5px;
+                border-color: #4f6f9a;
+            }
+        </style>
+        <br>
+
+            <p id="streetValue" class="innerTEXT" >
+            </p>
+        </div>
+
+        <div class="backButtonPosition">
+        <p align="center">
+            <a href="#searchByPage" data-direction="reverse" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext"></a>
+        </p>
+        </div>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-theme="d" class="ui.footer">
+        <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
+    </div><!-- /footer -->
+
+    <script>
+        $(document).on( 'pageshow', '#byLocationPage',function(event){
+            initMap();
+        });
+
+        function initMap() {
+            $.mobile.loading( 'show', {
+                text: 'loading',
+                textVisible: true,
+                theme: 'b',
+                html: ""
+            });
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 32.08153566996312, lng: 34.77752322388187},
+                zoom: 8,
+                mapTypeControl: false,
+                streetViewControl: false,
+                zoomControl: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+            // Try HTML5 geolocation
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    getStreetNameFromGoogleGeo(map, pos);
+
+                }, function() {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                    'Error: The Geolocation service failed.' :
+                    'Error: Your browser doesn\'t support geolocation.');
+        }
+
+        function getStreetNameFromGoogleGeo(map, pos) {
+            var geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(pos.lat, pos.lng);
+
+            geocoder.geocode({'latLng': latlng}, function(results, status) {
+                var streetName;
+                if (status == google.maps.GeocoderStatus.OK) {
+                    streetName = results[0].address_components[1].long_name;
+                    map.setCenter(results[0].geometry.location);
+                    map.fitBounds(results[0].geometry.bounds);
+                    $.ajax({
+                        url: "/streets/" + streetName,
+                                dataType: "text"
+                            })
+                            .then(function (response) {
+                                     $("#streetValue").html("מנדלסון, משה" +"<br>"+"<br>"+ response );
+                                $.mobile.loading( 'hide' );
+
+                            });
+                } else {
+                    alert("Geocoder failed due to: " + status);
+                }
+            });
+        }
+    </script>
+
+</div><!-- /end of #byLocationPage -->
+
+<!-- Start of #randomPage -->
+<div data-role="page" id="randomPage">
+    <div data-role="header" data-theme="b">
+        <h1>הידעת?</h1>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <p id="randomStreetName" align="right">
+        </p>
+        <p id="randomStreetValue" align="right">
+        </p>
+        <script>
+                $(document).on('pageshow', '#randomPage',function(event){
+>>>>>>> Stashed changes
                     var randomStreet;
                     $.ajax({
                         url: "/getRandomPage",

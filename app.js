@@ -1,4 +1,5 @@
 var fileParser = require('./parser.js');
+var levenshteinDistanceAlgo = require('./levenshteinDistance.js');
 var http = require('https');
 var express = require('express');
 var path = require('path');
@@ -6,12 +7,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 var googleAPI = 'AIzaSyAFIeUM9E0jdkLT7aNsizf_Iove6TvCj6Y';
 // tel aviv yafo in hebrew
 var strTlv = decodeURIComponent('%D7%AA%D7%9C%20%D7%90%D7%91%D7%99%D7%91%20%D7%99%D7%A4%D7%95');
+var allStreets = fileParser.getAllStreets();
+var allShortStreetNames = fileParser.getStreetNamesArray();
 var predictionsCache = [];
-
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -38,19 +39,60 @@ app.use('/', routes);
 app.use('/users', users);
 
 app.get('/getRandomPage', function(request, response) {
-  var allStreets = fileParser.getAllStreets();
-  var keys = Object.keys(allStreets);
-  var randomIndex = Math.floor(keys.length * Math.random());
+    var keys = Object.keys(allStreets);
+    var randomIndex = Math.floor(keys.length * Math.random());
+    var randomName = keys[randomIndex];
+    var randomValue = allStreets[randomName];
 
-  var randomName = keys[randomIndex];
-  var randomValue = allStreets[randomName];
-
-  response.send(JSON.stringify({streetName: randomName , streetInfo: randomValue}));
+    response.send(JSON.stringify({streetName: randomName , streetInfo: randomValue}));
 
 });
 
 app.get('/streets/:name', function(request, response) {
-  response.send(fileParser.getStreetValue(request.params.name));
+    var streetNameFromGoogle = request.params.name;
+    var streetsNames = Object.keys(allStreets);
+    var shortStreetsNames = Object.keys(allShortStreetNames);
+    var index;
+    var similarWords = [];
+    if (streetNameFromGoogle.length < 2) {
+        response.send("הרחוב שהקשת לא נמצא");
+    }
+    else if (allShortStreetNames.hasOwnProperty(streetNameFromGoogle)) {
+        response.send(fileParser.getStreetValue(allShortStreetNames[streetNameFromGoogle]));
+    } else {
+        if (allStreets.hasOwnProperty(streetNameFromGoogle)) {
+            response.send(fileParser.getStreetValue(streetNameFromGoogle));
+        } else {
+            for (i = 0; i < streetsNames.length; i++) {
+                index = streetsNames[i].indexOf(streetNameFromGoogle);
+                if (index !== -1) {
+                    if (shortStreetsNames[i] === undefined) {
+                        continue;
+                    }
+                    response.send(fileParser.getStreetValue(streetsNames[i]));
+                    break;
+                }
+            }
+            for (i = 0; i < streetsNames.length; i++) {
+                if (shortStreetsNames[i] === undefined) {
+                    continue;
+                }
+                var distance = levenshteinDistanceAlgo.levenshteinDistance(shortStreetsNames[i], streetNameFromGoogle);
+                if ((streetNameFromGoogle.length) === 2) {
+                    if (distance < 2) {
+                        similarWords.push(shortStreetsNames[i]);
+                    }
+                } else if ((streetNameFromGoogle.length) === 3) {
+                    if (distance < 3) {
+                        similarWords.push(shortStreetsNames[i]);
+                    }
+                } else if (distance < 4) {
+                    similarWords.push(shortStreetsNames[i]);
+                }
+            }
+            response.send(fileParser.getStreetValue(allShortStreetNames[similarWords[0]]));
+        }
+    }
 });
 
 app.get('/getGeoFromName/:name', function(request, response) {
@@ -186,3 +228,7 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+
+
+
