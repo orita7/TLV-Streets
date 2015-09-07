@@ -32,10 +32,3 @@ function levenshteinDistance (a, b){
     return matrix[b.length][a.length];
 };
 
-module.exports = {
-
-    levenshteinDistance: function(a,b) {
-        return levenshteinDistance(a,b)
-    }
-};
-
