@@ -40,11 +40,6 @@ app.get('/', function(request, response) {
     response.redirect('/main.html');
 });
 
-// redeirct the localhost/web/main.html to index.html file
-app.get('/index.html', function(request, response) {
-    response.redirect('/main.html');
-});
-
 app.get('/streets/:name', function(request, response) {
     var streetNameFromGoogle = request.params.name;
     var streetsNames = Object.keys(allStreets);
