@@ -22,7 +22,7 @@
 
     <div data-role="content">
         <h2 align="center">
-            <img src="static/logo.jpg"alt="TLV_Logo" height="100" width="250" align="middle">
+            <img src="/logo.jpg"alt="TLV_Logo" height="100" width="250" align="middle">
         </h2>
 
         <p>
@@ -291,6 +291,10 @@
                 {
                     googleMap.setCenter(results[0].geometry.location);
                     googleMap.fitBounds(results[0].geometry.bounds);
+                    var marker = new google.maps.marker({
+                        position: latlng,
+                        map: googleMap,
+                    });
                 }
             });
         };
@@ -348,7 +352,10 @@
                         var streetName = results[0].address_components[1].long_name;
                         googleMap.setCenter(results[0].geometry.location);
                         googleMap.fitBounds(results[0].geometry.bounds);
-
+                        var marker = new google.maps.marker({
+                            position: latlng,
+                            streetMap: googleMap,
+                        });
                         getAndSetStreetInfoFromServer(streetName);
 
                     } else {
@@ -387,7 +394,7 @@
     </div><!-- /header -->
 
     <p data-role="content" data-theme="d">
-        <img src="static/street_sign_with_names.png" height="100%" width="100%">
+        <img src="/street_sign_with_names.png" height="100%" width="100%">
     </p><!-- /content -->
 
 </div><!-- /end of #aboutUsPage -->
