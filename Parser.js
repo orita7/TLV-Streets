@@ -11,11 +11,7 @@ function startToParse(){
         filesNames.forEach(function(fileName){
 
             fs.readFile('./streets/'+fileName, 'utf8', function (err,data) {
-
-                console.log(fileName);
-
                 if (err) {
-                    console.log(err);
                     return '';
                 }
                 else{

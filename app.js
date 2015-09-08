@@ -155,9 +155,7 @@ app.get('/predictions/:prediction',function(request,response){
     }
     function getStreetFromTlv(data){
         var filtered = [];
-        console.log(data.length);
         data.predictions.forEach(function (result){
-            console.log(result);
             // if the city is tlv aviv
             if (result.terms[1].value == strTlv) {
                 // push the street name
