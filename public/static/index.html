@@ -1,343 +1,171 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>My Page</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
-        <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-        <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?language=iw"></script>
-        <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
-    </head>
-
-    <body dir="rtl">
-
-        <!-- Start of first page: #mainPage -->
-        <div data-role="page" id="mainPage">
-
-            <div data-role="header" data-theme="b">
-                <h1>TLV-Streets</h1>
-            </div><!-- /header -->
-
-            <div data-role="content">
-                <h2 align="center">
-                    <img src="static/logo.jpg"alt="TLV_Logo" height="100" width="250" align="middle">
-                </h2>
-
-                <p>
-                    <a href="#searchByPage" id="buttonSearchByPage" data-role="button" data-icon="search"> חיפוש לפי</a>
-                </p>
-                <p>
-                    <a href="#streetInfoPage" id="buttonStreetRandom" data-role="button" data-icon="star"> הידעת?</a>
-                </p>
-                <p>
-                    <a href="#aboutUsPage" id="buttonAboutUsPage" data-role="button" data-rel="dialog" data-transition="pop" data-icon="info">מי אנחנו?</a>
-                </p>
-            </div><!-- /content -->
-
-            <div data-role="footer" data-theme="d" class="ui.footer">
-                <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
-            </div><!-- /footer -->
-
-            <script>
-                $(document).ready(function() {
-                    // update the streetInfo template to be random
-                    $('#buttonStreetRandom').click(function () {
-                        templateDisaply = templateOptions.RANDOM;
-                    });
-                });
-            </script>
-
-        </div><!-- /end of #mainPage -->
-
-        <!-- Start of #searchByPage -->
-        <div data-role="page" id="searchByPage">
-
-            <div data-role="header" data-theme="b">
-                <h1>חיוש לפי</h1>
-            </div><!-- /header -->
-
-            <div data-role="content" >
-
-                <h2 align="center">
-
-                </h2>
-
-                <p>
-                    <a href="#byNamePage" id ='buttonByNamePage' data-role="button" data-icon=""> שם רחוב</a>
-                </p>
-                <p>
-                    <a href="#streetInfoPage" id ='buttonByLoction' data-role="button" data-icon="">המיקום שלי </a>
-                </p>
-
-                <div class="backButtonPosition">
-                    <p align="center">
-                        <a href="#mainPage" data-direction="reverse" data-role="button" data-icon="back" data-iconpos="notext"></a>
-                    </p>
-
-                </div>
-            </div><!-- /content -->
-
-            <div data-role="footer" data-theme="d" class="ui.footer">
-                <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
-            </div><!-- /footer -->
-
-            <script>
-                $(document).ready(function() {
-                    // update the streetInfo template to be by location
-                    $('#buttonByLoction').click(function(){
-                        templateDisaply = templateOptions.LOCATION;
-                    });
-                });
-            </script>
-        </div><!-- /end of #searchByPage -->
-
-        <!-- Start of #byNamePage -->
-        <div data-role="page" id="byNamePage">
-
-            <div data-role="header" data-theme="b">
-                <h1>חיפוש לפי שם הרחוב</h1>
-            </div><!-- /header -->
-
-            <div data-role="content" cal>
+<head>
+    <meta charset="utf-8">
+    <title>My Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?language=iw"></script>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
+</head>
+
+<body dir="rtl">
+
+<!-- Start of first page: #mainPage -->
+<div data-role="page" id="mainPage">
+
+    <div data-role="header" data-theme="b">
+        <h1>TLV-Streets</h1>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <h2 align="center">
+            <img src="static/logo.jpg"alt="TLV_Logo" height="100" width="250" align="middle">
+        </h2>
+
+        <p>
+            <a href="#searchByPage" id="buttonSearchByPage" data-role="button" data-icon="search"> חיפוש לפי</a>
+        </p>
+        <p>
+            <a href="#streetInfoPage" id="buttonStreetRandom" data-role="button" data-icon="star"> הידעת?</a>
+        </p>
+        <p>
+            <a href="#aboutUsPage" id="buttonAboutUsPage" data-role="button" data-rel="dialog" data-transition="pop" data-icon="info">מי אנחנו?</a>
+        </p>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-theme="d" class="ui.footer">
+        <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
+    </div><!-- /footer -->
+
+    <script>
+        $(document).ready(function() {
+            // update the streetInfo template to be random
+            $('#buttonStreetRandom').click(function () {
+                templateDisaply = templateOptions.RANDOM;
+            });
+        });
+    </script>
+
+</div><!-- /end of #mainPage -->
+
+<!-- Start of #searchByPage -->
+<div data-role="page" id="searchByPage">
+
+    <div data-role="header" data-theme="b">
+        <h1>חיוש לפי</h1>
+    </div><!-- /header -->
+
+    <div data-role="content" >
+
+        <h2 align="center">
+
+        </h2>
+
+        <p>
+            <a href="#byNamePage" id ='buttonByNamePage' data-role="button" data-icon=""> שם רחוב</a>
+        </p>
+        <p>
+            <a href="#streetInfoPage" id ='buttonByLoction' data-role="button" data-icon="">המיקום שלי </a>
+        </p>
+
+        <div class="backButtonPosition">
+            <p align="center">
+                <a href="#mainPage" data-direction="reverse" data-role="button" data-icon="back" data-iconpos="notext"></a>
+            </p>
+
+        </div>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-theme="d" class="ui.footer">
+        <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
+    </div><!-- /footer -->
+
+    <script>
+        $(document).ready(function() {
+            // update the streetInfo template to be by location
+            $('#buttonByLoction').click(function(){
+                templateDisaply = templateOptions.LOCATION;
+            });
+        });
+    </script>
+</div><!-- /end of #searchByPage -->
+
+<!-- Start of #byNamePage -->
+<div data-role="page" id="byNamePage">
+
+    <div data-role="header" data-theme="b">
+        <h1>חיפוש לפי שם הרחוב</h1>
+    </div><!-- /header -->
+
+    <div data-role="content" cal>
 
-                <h3 align="center">הכנס שם רחוב:</h3>
+        <h3 align="center">הכנס שם רחוב:</h3>
 
-                <ul id="autocomplete" data-role="listview" data-inset="true" data-filter="true"  data-divider-theme="e" data-filter-placeholder="מצא רחוב" data-filter-theme="d"></ul>
+        <ul id="autocomplete" data-role="listview" data-inset="true" data-filter="true"  data-divider-theme="e" data-filter-placeholder="מצא רחוב" data-filter-theme="d"></ul>
 
-                <h2 align="center">
-                    <a href="#byNameResponsePage">
-                        <button id="buttonSearch" onclick="getValue()" data-inline="true">חפש</button>
-                    </a>
-                </h2>
-
-                <script type="text/javascript">
-
-                    $(document).ready(function() {
-                        // update the streetInfo template to be by location
-                        $('#buttonByLoction').click(function(){
-                            templateDisaply = templateOptions.LOCATION;
-                        });
-                        // update the streetInfo template to be by location
-                        $('#buttonSearch').click(function(){
-                            templateDisaply = templateOptions.NAME;
-                        });
-                    });
-
-                    $(document).on("pageshow", "#byNamePage", function() {
-                        $("#autocomplete").on("listviewbeforefilter", getPredictions);
-                    });
+        <h2 align="center">
+            <a href="#streetInfoPage" id="buttonSearch" data-role="button" data-inline="true">חפש</a>
+        </h2>
 
+        <script type="text/javascript">
 
-                    function getPredictions(e, data) {
-                        $("#autocomplete").off("listviewbeforefilter", getPredictions);
+            $(document).ready(function() {
 
-                        setTimeout(function () {
-                            $("#autocomplete").on("listviewbeforefilter", getPredictions);
-                        }, 500);
+                $('#autocomplete').delegate('li', 'click', function () {
+                    templateDisaply = templateOptions.NAME;
+                    passStreetName = this.innerText.trim();
+                } );
 
-                        var $ul = $(this),
-                                $input = $(data.input),
-                                value = $input.val(),
-                                html = "";
+                // update the streetInfo template to be by name
+                $('#buttonSearch').click(function () {
+                    templateDisaply = templateOptions.NAME;
+                    passStreetName =$("input[data-type='search']").val().trim();
+                } );
+            });
 
-                        $ul.html("");
+            $(document).on("pageshow", "#byNamePage", function() {
+                $("#autocomplete").on("listviewbeforefilter", getPredictions);
+            });
 
-<<<<<<< Updated upstream
-                        if (value && value.length > 2) {
-                            $ul.html("<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>");
-                            $ul.listview("refresh");
+            function getPredictions(e, data) {
 
-                            $.ajax({
-                                url: "/predictions/" + $input.val(),
-                                dataType: "text"
-                            })
-                                    .then(function (response) {
+                $("#autocomplete").off("listviewbeforefilter", getPredictions);
 
-                                        var streets = JSON.parse(response);
-                                        var html = "";
-
-                                        $.each(streets, function (i, val) {
-                                            html += "<li>" +
-                                                        "<a href=\"#streetInfoPage\">" +
-                                                            val +
-                                                        "</a>" +
-                                                    " </li>";
-                                            // update the streetInfo template to be by location
-                                            $('#buttonSearchResult'+i).click(setTemplateByName);
-                                        });
-
-                                        $ul.html(html);
-                                        $ul.listview("refresh");
-                                        $ul.trigger("updatelayout");
-                                    });
-                        }
-                    };
-
-                </script>
-
-                <div class="backButtonPosition">
-                    <p align="center">
-                        <a href="#searchByPage" data-direction="reverse" data-role="button" data-icon="back" data-iconpos="notext"></a>
-                    </p>
-                </div>
-            </div><!-- /content -->
-
-            <div data-role="footer" data-theme="d" class="ui.footer">
-                <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
-            </div><!-- /footer -->
-
-        </div><!-- /end of #byNamePage -->
-
-        <!-- Start of #streetInfoPage -->
-        <div data-role="page" id="streetInfoPage">
-
-            <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-
-            <div data-role="header" data-theme="b">
-
-                <h1></h1>
-
-            </div><!-- /header -->
-
-            <div data-role="content">
-
-                <div id="streetMap" align="center"></div>
-                <style>
-                    #streetMap {
-                        height: 200px;
-                        border-style: solid;
-                        border-width: 5px;
-                        border-color: #4f6f9a;
-                    }
-                </style>
-
-                <p id="streetName" class="innerTEXT"></p>
-                <br>
-                <br>
-                <p id="streetInfo" class="innerTEXT"></p>
-
-
-                <div class="backButtonPosition">
-                    <p align="center">
-                        <a href="#searchByPage" data-direction="reverse" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext"></a>
-                    </p>
-                </div>
-
-            </div><!-- /content -->
-
-
-            <div data-role="footer" data-theme="d" class="ui.footer">
-                <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
-            </div><!-- /footer -->
-
-
-            <script>
-
-                var googleMap;
-                
-                var templateOptions = {
-                    LOCATION: 1,
-                    NAME: 2,
-                    RANDOM: 3
-                };
-
-                var templateDisaply = templateOptions.RANDOM;
-
-                $(document).on("pageshow", "#streetInfoPage", function() {
-                    setMap();
-
-                    switch (templateDisaply){
-                        case templateOptions.LOCATION:
-                                setByLocation();
-                            break;
-                        case templateOptions.NAME:
-                                setByName();
-                            break;
-                        case templateOptions.RANDOM:
-                                setByRandom();
-                            break;
-                        default:
-                            setByRandom();
-                            break;
-                    }
-                });
-
-                function setMap(){
-                    googleMap = new google.maps.Map(document.getElementById('streetMap'), {
-                        center: {lat: 32.08153566996312, lng: 34.77752322388187},
-                        zoom: 8,
-                        mapTypeControl: false,
-                        streetViewControl: false,
-                        zoomControl: false,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    });
-                };
-
-                function setByName(){
-
-                };
-
-                function setByLocation(){
-                    setUserLoction();
-
-                    function setUserLoction() {
-
-                        // Try HTML5 geolocation
-                        if (navigator.geolocation) {
-                            navigator.geolocation.getCurrentPosition(function(position) {
-
-                                var pos = {
-                                    lat: position.coords.latitude,
-                                    lng: position.coords.longitude
-                                };
-
-                                getStreetNameFromGoogleGeo(pos);
-
-                            }, function() {
-                                alert('השרת עמוס כרגע, אנא נסה שנית בעוד מספר דקות');
-                            });
-                        } else {
-                            alert('מכשירך אינו תומך במציאת מקום, וודא שה-GPS פעיל');
-                        }
-                    };
-
-                    function getStreetNameFromGoogleGeo(pos) {
-                        var geocoder = new google.maps.Geocoder();
-                        var latlng = new google.maps.LatLng(pos.lat, pos.lng);
-
-                        geocoder.geocode({'latLng': latlng}, function(results, status) {
-
-                            var streetName;
-
-                            if (status == google.maps.GeocoderStatus.OK) {
-                                streetName = results[0].address_components[1].long_name;
-                                googleMap.setCenter(results[0].geometry.location);
-                                googleMap.fitBounds(results[0].geometry.bounds);
-
-                                getAndSetStreetInfoFromServer(streetName);
-
-                            } else {
-                                alert("Geocoder failed due to: " + status);
-                            }
-                        });
-                    };
-
-                    function getAndSetStreetInfoFromServer(streetName){
-                        $.ajax({
-                            url: "/streets/" + "מנדלסון, משה",
-                            dataType: "text"
-                        })
-                                .then(function (response) {
-                                    $("#streetName").html("מנדלסון, משה" );
-                                    $("#streetValue").html(response);
+                setTimeout(function () {
+                    $("#autocomplete").on("listviewbeforefilter", getPredictions);
+                }, 500);
+
+                var $ul = $(this),
+                        $input = $(data.input),
+                        value = $input.val(),
+                        html = "";
+
+                $ul.html("");
+
+                if (value && value.length > 2) {
+                    $ul.html("<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>");
+                    $ul.listview("refresh");
+
+                    $.ajax({
+                        url: "/predictions/" + $input.val(),
+                        dataType: "text"
+                    })
+                            .then(function (response) {
+
+                                var streets = JSON.parse(response);
+                                var html = "";
+
+                                $.each(streets, function (i, val) {
+                                    html += "<li>" +
+                                            "<a href=\"#streetInfoPage\" >" +
+                                            val +
+                                            "</a>" +
+                                            " </li>";
                                 });
-                    };
-                };
 
-                function setByRandom() {
-=======
                                 $ul.html(html);
                                 $ul.listview("refresh");
                                 $ul.trigger("updatelayout");
@@ -348,7 +176,9 @@
         </script>
 
         <div class="backButtonPosition">
-        <p align="center"><a href="#searchByPage" data-direction="reverse" data-role="button" data-icon="back" data-iconpos="notext"></a></p>
+            <p align="center">
+                <a href="#searchByPage" data-direction="reverse" data-role="button" data-icon="back" data-iconpos="notext"></a>
+            </p>
         </div>
     </div><!-- /content -->
 
@@ -358,117 +188,82 @@
 
 </div><!-- /end of #byNamePage -->
 
-<!-- Start of #byNameResponsePage -->
-<div data-role="page" id="byNameResponsePage">
+<!-- Start of #streetInfoPage -->
+<div data-role="page" id="streetInfoPage">
 
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
 
     <div data-role="header" data-theme="b">
-        <h1>:חיפוש לפי שם הרחוב</h1>
+
+        <h1></h1>
+
     </div><!-- /header -->
 
-
     <div data-role="content">
-        <div id="map1" align="center"></div>
+
+        <div id="streetMap" align="center"></div>
         <style>
-            #map {
+            #streetMap {
                 height: 200px;
                 border-style: solid;
                 border-width: 5px;
                 border-color: #4f6f9a;
             }
         </style>
+
+        <p id="streetName" class="innerTEXT"></p>
         <br>
+        <br>
+        <p id="streetInfo" class="innerTEXT"></p>
 
-        <div id= valueBackground class="square" align="center">
-            <span id="thestreetValue" class="innerTEXT" >
-
-            </span>
-        </div>
 
         <div class="backButtonPosition">
-        <p align="center">
-            <a href="#searchByPage" data-direction="reverse" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext"></a>
-        </p>
-        </div>
-    </div><!-- /content -->
-
-    <div data-role="footer" data-theme="d" class="ui.footer">
-        <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
-    </div><!-- /footer -->
-
-    <script>
-        $(document).on( 'pageshow', '#byLocationPage',function(event){
-            initMap();
-        });
-
-        function initMap(lat, lng) {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 32.08153566996312, lng: 34.77752322388187},
-                zoom: 8,
-                mapTypeControl: false,
-                streetViewControl: false,
-                zoomControl: false,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            });
-        }
-
-    </script>
-
-</div><!-- /end of #byNameResponsePage -->
-
-<!-- Start of #byLocationPage -->
-<div data-role="page" id="byLocationPage">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-
-    <div data-role="header" data-theme="b">
-
-        <h1>חיפוש לפי מיקום</h1>
-
-    </div><!-- /header -->
-
-    <div data-role="content">
-        <div id="map" align="center"></div>
-        <style>
-            #map {
-                height: 200px;
-                border-style: solid;
-                border-width: 5px;
-                border-color: #4f6f9a;
-            }
-        </style>
-        <br>
-
-            <p id="streetValue" class="innerTEXT" >
+            <p align="center">
+                <a href="#searchByPage" data-direction="reverse" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext"></a>
             </p>
         </div>
 
-        <div class="backButtonPosition">
-        <p align="center">
-            <a href="#searchByPage" data-direction="reverse" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext"></a>
-        </p>
-        </div>
     </div><!-- /content -->
+
 
     <div data-role="footer" data-theme="d" class="ui.footer">
         <p align="center" style="font-size:70%"> המידע באדיבות עיריית תל אביב - יפו</p>
     </div><!-- /footer -->
 
+
     <script>
-        $(document).on( 'pageshow', '#byLocationPage',function(event){
-            initMap();
+
+        var googleMap;
+        var passStreetName; //the selected street name from search page
+        var templateOptions = {
+            LOCATION: 1,
+            NAME: 2,
+            RANDOM: 3
+        };
+
+        var templateDisaply = templateOptions.RANDOM;
+
+        $(document).on("pageshow", "#streetInfoPage", function() {
+            setMap();
+
+            switch (templateDisaply){
+                case templateOptions.LOCATION:
+                    setByLocation();
+                    break;
+                case templateOptions.NAME:
+                    setByName();
+                    break;
+                case templateOptions.RANDOM:
+                    setByRandom();
+                    break;
+                default:
+                    setByRandom();
+                    break;
+            }
         });
 
-        function initMap() {
-            $.mobile.loading( 'show', {
-                text: 'loading',
-                textVisible: true,
-                theme: 'b',
-                html: ""
-            });
-            var map = new google.maps.Map(document.getElementById('map'), {
+        function setMap(){
+            googleMap = new google.maps.Map(document.getElementById('streetMap'), {
                 center: {lat: 32.08153566996312, lng: 34.77752322388187},
                 zoom: 8,
                 mapTypeControl: false,
@@ -476,107 +271,121 @@
                 zoomControl: false,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
-            // Try HTML5 geolocation
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
+        };
 
-                    var pos = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
+        function setByName(){
+            getAndSetStreetInfoFromServer(passStreetName);
+            getandSetGeoFromStreetName(passStreetName);
+        };
 
-                    getStreetNameFromGoogleGeo(map, pos);
-
-                }, function() {
-                    handleLocationError(true, infoWindow, map.getCenter());
-                });
-            } else {
-                // Browser doesn't support Geolocation
-                handleLocationError(false, infoWindow, map.getCenter());
-            }
-        }
-
-        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-            infoWindow.setPosition(pos);
-            infoWindow.setContent(browserHasGeolocation ?
-                    'Error: The Geolocation service failed.' :
-                    'Error: Your browser doesn\'t support geolocation.');
-        }
-
-        function getStreetNameFromGoogleGeo(map, pos) {
+        function getandSetGeoFromStreetName(streetName) {
             var geocoder = new google.maps.Geocoder();
-            var latlng = new google.maps.LatLng(pos.lat, pos.lng);
 
-            geocoder.geocode({'latLng': latlng}, function(results, status) {
-                var streetName;
-                if (status == google.maps.GeocoderStatus.OK) {
-                    streetName = results[0].address_components[1].long_name;
-                    map.setCenter(results[0].geometry.location);
-                    map.fitBounds(results[0].geometry.bounds);
-                    $.ajax({
-                        url: "/streets/" + streetName,
-                                dataType: "text"
-                            })
-                            .then(function (response) {
-                                     $("#streetValue").html("מנדלסון, משה" +"<br>"+"<br>"+ response );
-                                $.mobile.loading( 'hide' );
-
-                            });
-                } else {
-                    alert("Geocoder failed due to: " + status);
+            geocoder.geocode( {'address': streetName + "תל אביב יפו"}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK)
+                {
+                    googleMap.setCenter(results[0].geometry.location);
+                    googleMap.fitBounds(results[0].geometry.bounds);
                 }
             });
+        };
+
+        function getAndSetStreetInfoFromServer(streetName){
+            $("#streetName").html(streetName);
+
+            $.ajax({
+                url: "/streets/" + streetName,
+                dataType: "text"
+            })
+                    .then(function (response) {
+                        if(response !== ''){
+                            // the server info for the request
+                            $("#streetInfo").html(response);
+                        }else{
+                            // the server didn't find the street
+                            $("#streetInfo").html('לצערנו לא נמצא מידע על הרחוב במאגר שלנו');
+                        }
+                    });
+        };
+
+        function setByLocation(){
+            setUserLoction();
+
+            function setUserLoction() {
+
+                // Try HTML5 geolocation
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+
+                        var pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+
+                        getStreetNameFromGoogleGeo(pos);
+
+                    }, function() {
+                        alert('השרת עמוס כרגע, אנא נסה שנית בעוד מספר דקות');
+                    });
+                } else {
+                    alert('מכשירך אינו תומך במציאת מקום, וודא שה-GPS פעיל');
+                }
+            };
+
+            function getStreetNameFromGoogleGeo(pos) {
+                var geocoder = new google.maps.Geocoder();
+                var latlng = new google.maps.LatLng(pos.lat, pos.lng);
+
+                geocoder.geocode({'latLng': latlng}, function(results, status) {
+
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        // set the global streetName
+                        var streetName = results[0].address_components[1].long_name;
+                        googleMap.setCenter(results[0].geometry.location);
+                        googleMap.fitBounds(results[0].geometry.bounds);
+
+                        getAndSetStreetInfoFromServer(streetName);
+
+                    } else {
+                        alert("Geocoder failed due to: " + status);
+                    }
+                });
+            };
+        };
+
+        function setByRandom() {
+            var randomStreet;
+            $.ajax({
+                url: "/getRandomPage",
+                dataType: "text"
+            })
+                    .then(function (response) {
+                        randomStreet = JSON.parse(response);
+                        $("#streetName").html(randomStreet.streetName);
+                        $("#streetInfo").html(randomStreet.streetInfo);
+                        getandSetGeoFromStreetName(randomStreet.streetName);
+                    });
         }
+
     </script>
 
-</div><!-- /end of #byLocationPage -->
+</div><!-- /end of #streetInfoPage -->
 
-<!-- Start of #randomPage -->
-<div data-role="page" id="randomPage">
-    <div data-role="header" data-theme="b">
-        <h1>הידעת?</h1>
+
+<!-- Start of #aboutUsPage -->
+<div data-role="page" id="aboutUsPage">
+
+    <div data-role="header" data-theme="e">
+        <h1>
+            מי אנחנו?
+        </h1>
     </div><!-- /header -->
 
-    <div data-role="content">
-        <p id="randomStreetName" align="right">
-        </p>
-        <p id="randomStreetValue" align="right">
-        </p>
-        <script>
-                $(document).on('pageshow', '#randomPage',function(event){
->>>>>>> Stashed changes
-                    var randomStreet;
-                    $.ajax({
-                        url: "/getRandomPage",
-                        dataType: "text"
-                    })
-                            .then(function (response) {
-                                randomStreet = JSON.parse(response);
-                                $("#streetName").html(randomStreet.streetName);
-                                $("#streetInfo").html(randomStreet.streetInfo);
-                            });
+    <p data-role="content" data-theme="d">
+        <img src="static/street_sign_with_names.png" height="100%" width="100%">
+    </p><!-- /content -->
 
-                }
+</div><!-- /end of #aboutUsPage -->
 
-            </script>
-
-        </div><!-- /end of #streetInfoPage -->
-
-
-        <!-- Start of #aboutUsPage -->
-        <div data-role="page" id="aboutUsPage">
-
-            <div data-role="header" data-theme="e">
-                <h1>
-                    מי אנחנו?
-                </h1>
-            </div><!-- /header -->
-
-            <p data-role="content" data-theme="d">
-                <img src="static/street_sign_with_names.png" height="100%" width="100%">
-            </p><!-- /content -->
-
-        </div><!-- /end of #aboutUsPage -->
-
-    </body>
+</body>
 </html>
