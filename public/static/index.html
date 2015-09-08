@@ -55,7 +55,7 @@
 <div data-role="page" id="searchByPage">
 
     <div data-role="header" data-theme="b">
-        <h1>חיוש לפי</h1>
+        <h1>חיפוש לפי</h1>
     </div><!-- /header -->
 
     <div data-role="content" >
@@ -195,7 +195,7 @@
 
     <div data-role="header" data-theme="b">
 
-        <h1></h1>
+        <h1 id="streetInfoHeader"></h1>
 
     </div><!-- /header -->
 
@@ -249,15 +249,19 @@
             switch (templateDisaply){
                 case templateOptions.LOCATION:
                     setByLocation();
+                    document.getElementById("streetInfoHeader").innerHTML = "חיפוש לפי מיקום";
                     break;
                 case templateOptions.NAME:
                     setByName();
+                    document.getElementById("streetInfoHeader").innerHTML = "חיפוש לפי שם רחוב";
                     break;
                 case templateOptions.RANDOM:
                     setByRandom();
+                    document.getElementById("streetInfoHeader").innerHTML = "הידעת?";
                     break;
                 default:
                     setByRandom();
+                    document.getElementById("streetInfoHeader").innerHTML = "הידעת?";
                     break;
             }
         });
