@@ -17,15 +17,15 @@ var predictionsCache = [];
 var app = express();
 fileParser.startToParse();
 
-app.use(express.static('/static'));
+app.use(express.static('/web'));
 
 // uncomment after placing your favicon in /static
-//app.use(favicon(__dirname + '/static/favicon.ico'));
+app.use(favicon(__dirname + '/web/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'static')));
+app.use(express.static(path.join(__dirname, 'web')));
 
 app.get('/getRandomPage', function(request, response) {
     var keys = Object.keys(allStreets);
@@ -33,6 +33,11 @@ app.get('/getRandomPage', function(request, response) {
     var randomName = keys[randomIndex];
     var randomValue = allStreets[randomName];
     response.send(JSON.stringify({streetName: randomName , streetInfo: randomValue}));
+});
+
+// redeirct the localhost/web/main.html to index.html file
+app.get('/', function(request, response) {
+    response.redirect('/main.html');
 });
 
 app.get('/streets/:name', function(request, response) {
