@@ -219,7 +219,7 @@
 
         <div class="backButtonPosition">
             <p align="center">
-                <a href="#mainPage" data-direction="reverse" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext"></a>
+                <a href="#mainPage" id = "templateBackButton" data-direction="reverse" data-role="button" data-inline="true" data-icon="back" data-iconpos="notext"></a>
             </p>
         </div>
 
@@ -250,18 +250,22 @@
                 case templateOptions.LOCATION:
                     setByLocation();
                     document.getElementById("streetInfoHeader").innerHTML = "חיפוש לפי מיקום";
+                    $("#templateBackButton").attr("href", "#searchByPage");
                     break;
                 case templateOptions.NAME:
                     setByName();
                     document.getElementById("streetInfoHeader").innerHTML = "חיפוש לפי שם רחוב";
+                    $("#templateBackButton").attr("href", "#byNamePage");
                     break;
                 case templateOptions.RANDOM:
                     setByRandom();
                     document.getElementById("streetInfoHeader").innerHTML = "הידעת?";
+                    $("#templateBackButton").attr("href", "#mainPage");
                     break;
                 default:
                     setByRandom();
                     document.getElementById("streetInfoHeader").innerHTML = "הידעת?";
+                    $("#templateBackButton").attr("href", "#mainPage");
                     break;
             }
         });
