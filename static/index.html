@@ -212,8 +212,7 @@
         </style>
 
         <div class="innerTEXT">
-            <p id="streetName"></p>
-            <br>
+            <p id="streetName" style = "font-weight: bold"></p>
             <p id="streetInfo"></p>
         </div>
 
@@ -279,6 +278,12 @@
         };
 
         function setByName(){
+            $.mobile.loading('show', {
+                text: '..Loading',
+                textVisible: true,
+                theme: 'b',
+                html: ""
+            });
             getAndSetStreetInfoFromServer(passStreetName);
             getandSetGeoFromStreetName(passStreetName);
         };
@@ -291,10 +296,7 @@
                 {
                     googleMap.setCenter(results[0].geometry.location);
                     googleMap.fitBounds(results[0].geometry.bounds);
-                    var marker = new google.maps.marker({
-                        position: latlng,
-                        map: googleMap,
-                    });
+                    $.mobile.loading('hide');
                 }
             });
         };
@@ -321,6 +323,12 @@
             setUserLoction();
 
             function setUserLoction() {
+                $.mobile.loading('show', {
+                    text: '..Loading',
+                    textVisible: true,
+                    theme: 'b',
+                    html: ""
+                });
 
                 // Try HTML5 geolocation
                 if (navigator.geolocation) {
@@ -333,6 +341,7 @@
 
                         getStreetNameFromGoogleGeo(pos);
 
+                        $.mobile.loading('hide');
                     }, function() {
                         alert('השרת עמוס כרגע, אנא נסה שנית בעוד מספר דקות');
                     });
@@ -352,12 +361,7 @@
                         var streetName = results[0].address_components[1].long_name;
                         googleMap.setCenter(results[0].geometry.location);
                         googleMap.fitBounds(results[0].geometry.bounds);
-                        var marker = new google.maps.marker({
-                            position: latlng,
-                            streetMap: googleMap,
-                        });
                         getAndSetStreetInfoFromServer(streetName);
-
                     } else {
                         alert("Geocoder failed due to: " + status);
                     }
@@ -366,6 +370,13 @@
         };
 
         function setByRandom() {
+            $.mobile.loading('show', {
+                text: '..Loading',
+                textVisible: true,
+                theme: 'b',
+                html: ""
+            });
+
             var randomStreet;
             $.ajax({
                 url: "/getRandomPage",
@@ -376,7 +387,9 @@
                         $("#streetName").html(randomStreet.streetName);
                         $("#streetInfo").html(randomStreet.streetInfo);
                         getandSetGeoFromStreetName(randomStreet.streetName);
+                        $.mobile.loading('hide');
                     });
+
         }
 
     </script>
