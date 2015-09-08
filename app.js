@@ -18,9 +18,6 @@ var app = express();
 fileParser.startToParse();
 
 app.use(express.static('/static'));
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /static
 //app.use(favicon(__dirname + '/static/favicon.ico'));
