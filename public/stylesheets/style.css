@@ -31,18 +31,13 @@ a {
   bottom   : 30px;
 }
 
-#square {
-  background: rgba(105, 205, 252, 0.33);
-  width: 100%;
-  height: 200px;
-}
-.innerTEXT{
+#innerTEXT{
   position:absolute;
   font-family: "Alef-Bold";
 }
 
-.backButtonPosition{
-  position: fixed;
+#backButtonPosition{
+  position: absolute;
   bottom: 10%;
   right: 50%;
 }
