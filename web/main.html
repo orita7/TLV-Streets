@@ -103,15 +103,18 @@
 
         <h3 align="center">הכנס שם רחוב:</h3>
 
-        <ul id="autocomplete" data-role="listview" data-inset="true" data-filter="true"  data-divider-theme="e" data-filter-placeholder="מצא רחוב" data-filter-theme="d"></ul>
+        <ul id="autocomplete" data-icon="false" data-role="listview" data-inset="true" data-filter="true"  data-divider-theme="e" data-filter-placeholder="מצא רחוב"  data-filter-theme="d"></ul>
 
         <h2 align="center">
-            <a href="#streetInfoPage" id="buttonSearch" data-role="button" data-inline="true">חפש</a>
+            <a href="#streetInfoPage" id="buttonSearch" data-role="button" data-inline="true" class="ui-disabled">חפש</a>
         </h2>
 
         <script type="text/javascript">
 
             $(document).ready(function() {
+                $(document).on("pageshow", "#byNamePage", function() {
+                    $('#buttonSearch').addClass('ui-disabled');
+                });
 
                 $('#autocomplete').delegate('li', 'click', function () {
                     templateDisaply = templateOptions.NAME;
@@ -127,13 +130,24 @@
                     $('input[data-type="search"]').val('');
                     $('#autocomplete').empty();
                 } );
+
+                $(".ui-icon-delete").click(function(){
+                    $('#buttonSearch').addClass('ui-disabled');
+                });
+
             });
 
             $(document).on("pageshow", "#byNamePage", function() {
-                $("#autocomplete").on("listviewbeforefilter", getPredictions);
+                $('#buttonSearch').removeClass('ui-disabled');
             });
 
             function getPredictions(e, data) {
+
+                if($('input[data-type="search"]').val() === ''){
+                    $('#buttonSearch').addClass('ui-disabled');
+                }else{
+                    $('#buttonSearch').removeClass('ui-disabled');
+                }
 
                 $("#autocomplete").off("listviewbeforefilter", getPredictions);
 
@@ -170,6 +184,7 @@
 
                                 $ul.html(html);
                                 $ul.listview("refresh");
+                                $ul.trigger("updatelayout");
                             });
                 }
             };
@@ -246,6 +261,8 @@
         var templateDisaply = templateOptions.RANDOM;
 
         $(document).on("pageshow", "#streetInfoPage", function() {
+            $("#streetName").html('');
+            $("#streetInfo").html('');
             setMap();
 
             switch (templateDisaply){
@@ -308,21 +325,23 @@
         };
 
         function getAndSetStreetInfoFromServer(streetName){
-            $("#streetName").html(streetName);
+            if(streetName !== ''){
+                $("#streetName").html(streetName);
 
-            $.ajax({
-                url: "/streets/" + streetName,
-                dataType: "text"
-            })
-                    .then(function (response) {
-                        if(response !== ''){
-                            // the server info for the request
-                            $("#streetInfo").html(response);
-                        }else{
-                            // the server didn't find the street
-                            $("#streetInfo").html('לצערנו לא נמצא מידע על הרחוב במאגר שלנו');
-                        }
-                    });
+                $.ajax({
+                    url: "/streets/" + streetName,
+                    dataType: "text"
+                })
+                        .then(function (response) {
+                            if(response !== ''){
+                                // the server info for the request
+                                $("#streetInfo").html(response);
+                            }else{
+                                // the server didn't find the street
+                                $("#streetInfo").html('לצערנו לא נמצא מידע על הרחוב במאגר שלנו');
+                            }
+                        });
+            }
         };
 
         function setByLocation(){
