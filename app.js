@@ -14,8 +14,6 @@ var strTlv = decodeURIComponent('%D7%AA%D7%9C%20%D7%90%D7%91%D7%99%D7%91%20%D7%9
 var allStreets = fileParser.getAllStreets();
 var allShortStreetNames = fileParser.getStreetNamesArray();
 var predictionsCache = [];
-var routes = require('./routes/index');
-var users = require('./routes/users');
 var app = express();
 fileParser.startToParse();
 
@@ -31,9 +29,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'static')));
-
-app.use('/', routes);
-app.use('/users', users);
 
 app.get('/getRandomPage', function(request, response) {
     var keys = Object.keys(allStreets);
