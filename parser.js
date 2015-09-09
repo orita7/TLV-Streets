@@ -1,6 +1,8 @@
 var hashStreets = [];
 var streetNamesArray = [];
 var streetDelimiter = "\r\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\n";
+var endOfLine = require('os').EOL;
+var streetDelimiter = "\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n";
 
 function startToParse(){
 
@@ -25,15 +27,15 @@ function startToParse(){
 
 function prepareRawDataToJson(filedata){
 
-    var page = /\r\n \r\n(\d\d?\r\n.*\r\n|.*\r\n\d\d?\r\n)/ig;
-    var newStreet = /\r\n\(\d\d?\d?\)\r\n/ig;
-    var info = /\r\n \r\n([^@]*\r\n)*/ig;
+    var page = /\n \n(\d\d?\n.*\n|.*\n\d\d?\n)/ig;
+    var newStreet = /\n\(\d\d?\d?\)\n/ig;
+    var info = /\n \n([^@]*\n)*/ig;
     var wrongYear = /\(-\d\d\d\d\)|\(-\d\d\d\d~\)/ig;
 
 
-    var remomvePages =  filedata.replace(page, "\r\n");
+    var remomvePages =  filedata.replace(page, endOfLine);
     var streetSplit = remomvePages.replace(newStreet, streetDelimiter);
-    var str = streetSplit.replace(info,"\r\n");
+    var str = streetSplit.replace(info, endOfLine);
     str = str.replace(wrongYear, "").trim();
 
     return str;
@@ -44,6 +46,7 @@ function addToHash(parseData){
     var currentStreet;
     var fullStreetName;
     var streetInfo;
+    var partialStreetName = [];
 
     var allStreets = parseData.split(streetDelimiter);
 
@@ -52,8 +55,9 @@ function addToHash(parseData){
         currentStreet = new Object();
 
         fullStreetName = street.slice(0,street.indexOf('\r\n')).trim();
+        fullStreetName = street.slice(0,street.indexOf(endOfLine)).trim();
 
-        streetInfo = street.slice(street.indexOf('\r\n'),street.length);
+        streetInfo = street.slice(street.indexOf(endOfLine),street.length);
         streetInfo = streetInfo.replace(/(\r\n|\n|\r)/g," ").trim();
 
         partialStreetName = fullStreetName.split(",");
