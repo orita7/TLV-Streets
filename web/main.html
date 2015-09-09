@@ -99,6 +99,84 @@
         <h1>חיפוש לפי שם הרחוב</h1>
     </div><!-- /header -->
 
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('#autocomplete').delegate('li', 'click', function () {
+                templateDisaply = templateOptions.NAME;
+                passStreetName = this.innerText.trim();
+                $('input[data-type="search"]').val('');
+                $('#autocomplete').empty();
+            } );
+
+            // update the streetInfo template to be by name
+            $('#buttonSearch').click(function () {
+                templateDisaply = templateOptions.NAME;
+                passStreetName =$("input[data-type='search']").val().trim();
+                $('input[data-type="search"]').val('');
+                $('#autocomplete').empty();
+            } );
+
+            $(".ui-icon-delete").click(function(){
+                $('#buttonSearch').addClass('ui-disabled');
+            });
+        });
+
+        $(document).on("pageshow", "#byNamePage", function() {
+            $("#autocomplete").on("listviewbeforefilter", getPredictions);
+            $('#buttonSearch').addClass('ui-disabled');
+        });
+
+        function getPredictions(e, data) {
+
+            if($('input[data-type="search"]').val() === ''){
+                $('#buttonSearch').addClass('ui-disabled');
+            }else{
+                $('#buttonSearch').removeClass('ui-disabled');
+            }
+
+            $("#autocomplete").off("listviewbeforefilter", getPredictions);
+
+            setTimeout(function () {
+                $("#autocomplete").on("listviewbeforefilter", getPredictions);
+            }, 500);
+
+            var $ul = $(this),
+                    $input = $(data.input),
+                    value = $input.val(),
+                    html = "";
+
+            $ul.html("");
+
+            if (value && value.length > 2) {
+                $ul.html("<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>");
+
+                $.ajax({
+                    url: "/predictions/" + $input.val(),
+                    dataType: "text"
+                })
+                        .then(function (response) {
+
+                            var streets = JSON.parse(response);
+                            var html = "";
+
+                            $.each(streets, function (i, val) {
+                                html += "<li>" +
+                                        "<a href=\"#streetInfoPage\" >" +
+                                        val +
+                                        "</a>" +
+                                        " </li>";
+                            });
+
+                            $ul.html(html);
+                            $ul.listview("refresh");
+                            $ul.trigger("updatelayout");
+                        });
+            }
+        };
+
+    </script>
+
     <div data-role="content" cal>
 
         <h3 align="center">הכנס שם רחוב:</h3>
@@ -108,88 +186,6 @@
         <h2 align="center">
             <a href="#streetInfoPage" id="buttonSearch" data-role="button" data-inline="true" class="ui-disabled">חפש</a>
         </h2>
-
-        <script type="text/javascript">
-
-            $(document).ready(function() {
-                $(document).on("pageshow", "#byNamePage", function() {
-                    $('#buttonSearch').addClass('ui-disabled');
-                });
-
-                $('#autocomplete').delegate('li', 'click', function () {
-                    templateDisaply = templateOptions.NAME;
-                    passStreetName = this.innerText.trim();
-                    $('input[data-type="search"]').val('');
-                    $('#autocomplete').empty();
-                } );
-
-                // update the streetInfo template to be by name
-                $('#buttonSearch').click(function () {
-                    templateDisaply = templateOptions.NAME;
-                    passStreetName =$("input[data-type='search']").val().trim();
-                    $('input[data-type="search"]').val('');
-                    $('#autocomplete').empty();
-                } );
-
-                $(".ui-icon-delete").click(function(){
-                    $('#buttonSearch').addClass('ui-disabled');
-                });
-
-            });
-
-            $(document).on("pageshow", "#byNamePage", function() {
-                $('#buttonSearch').removeClass('ui-disabled');
-            });
-
-            function getPredictions(e, data) {
-
-                if($('input[data-type="search"]').val() === ''){
-                    $('#buttonSearch').addClass('ui-disabled');
-                }else{
-                    $('#buttonSearch').removeClass('ui-disabled');
-                }
-
-                $("#autocomplete").off("listviewbeforefilter", getPredictions);
-
-                setTimeout(function () {
-                    $("#autocomplete").on("listviewbeforefilter", getPredictions);
-                }, 500);
-
-                var $ul = $(this),
-                        $input = $(data.input),
-                        value = $input.val(),
-                        html = "";
-
-                $ul.html("");
-
-                if (value && value.length > 2) {
-                    $ul.html("<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>");
-
-                    $.ajax({
-                        url: "/predictions/" + $input.val(),
-                        dataType: "text"
-                    })
-                            .then(function (response) {
-
-                                var streets = JSON.parse(response);
-                                var html = "";
-
-                                $.each(streets, function (i, val) {
-                                    html += "<li>" +
-                                            "<a href=\"#streetInfoPage\" >" +
-                                            val +
-                                            "</a>" +
-                                            " </li>";
-                                });
-
-                                $ul.html(html);
-                                $ul.listview("refresh");
-                                $ul.trigger("updatelayout");
-                            });
-                }
-            };
-
-        </script>
 
         <div class="backButtonPosition">
             <p align="center">
