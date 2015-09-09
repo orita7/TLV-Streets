@@ -1,4 +1,10 @@
-var fileParser = require('./parser.js');
+var os = require('os');
+var platform = os.platform();
+if (platform === 'win32') {
+    var fileParser = require('./parserForWin.js');
+} else {
+    var fileParser = require('./parserForMac.js');
+}
 var levenshteinDistanceAlgo = require('./levenshteinDistance.js');
 var http = require('https');
 var express = require('express');
