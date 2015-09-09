@@ -1,4 +1,4 @@
-var fileParser = require('/parser.js');
+var fileParser = require('./parser.js');
 var levenshteinDistanceAlgo = require('./levenshteinDistance.js');
 var http = require('https');
 var express = require('express');
